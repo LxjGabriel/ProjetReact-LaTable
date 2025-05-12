@@ -1,10 +1,10 @@
-const pool = require('../db');
+const MenuModel = require('../models/MenuModel');
 
 class MenuController{
     
     async getAllMenus(req, res) {
         try {
-            const result = await pool.query('SELECT * FROM menu_items');
+            const result = await MenuModel.getAllMenus();
             res.json(result.rows);
         } catch (err) {
             console.error(err.message);
@@ -15,7 +15,7 @@ class MenuController{
     async getMenuById(req, res) {
         const { id } = req.params;
         try {
-            const result = await pool.query('SELECT * FROM menu_items WHERE id = $1', [id]);
+            const result = await MenuModel.getMenuById(id);
             if (result.rows.length === 0) {
                 return res.status(404).json({ error: "Menu not found" });
             }
@@ -29,10 +29,8 @@ class MenuController{
     async createMenu(req, res) {
         const { name, description, price, category } = req.body;
         try {
-            const result = await pool.query(
-                'INSERT INTO menu_items (name, description, price, category) VALUES ($1, $2, $3, $4) RETURNING *',
-                [name, description, price, category]
-            );
+            const menu = new MenuModel(name, description, price, category);
+            const result = await menu.createMenu();
             res.status(201).json(result.rows[0]);
         } catch (err) {
             console.error(err.message);
@@ -44,14 +42,12 @@ class MenuController{
         const { id } = req.params;
         const { name, description, price, category } = req.body;
         try {
-            const menu = await pool.query('SELECT * FROM menu_items WHERE id = $1', [id]);
+            const menu = await MenuModel.getMenuById(id);
             if (menu.rows.length === 0) {
                 return res.status(404).json({ error: "Menu not found" });
             }
-            const result = await pool.query(
-                'UPDATE menu_items SET name = $1, description = $2, price = $3, category = $4 WHERE id = $5 RETURNING *',
-                [name, description, price, category, id]
-            );
+            const updatedMenu = new MenuModel(name, description, price, category);
+            const result = await updatedMenu.updateMenu(id);
             res.status(200).json(result.rows[0]);
         } catch (err) {
             console.error(err.message);
@@ -62,11 +58,11 @@ class MenuController{
     async deleteMenu(req, res) {
         const { id } = req.params;
         try {
-            const menu = await pool.query('SELECT * FROM menu_items WHERE id = $1', [id]);
+            const menu = await MenuModel.getMenuById(id);
             if (menu.rows.length === 0) {
                 return res.status(404).json({ error: "Menu not found" });
             }
-            await pool.query('DELETE FROM menu_items WHERE id = $1;', [id]);
+            await MenuModel.deleteMenu(id);
             res.status(204).json();
         } catch (err) {
             console.error(err.message);
