@@ -46,7 +46,7 @@ CREATE TABLE reservation_tables (
 -- Table: opening_slots
 CREATE TABLE opening_slots (
     id INTEGER PRIMARY KEY,
-    date_time DATETIME,
+    date_time TIMESTAMP,
     duration INTEGER,
     available BOOLEAN,
     comment VARCHAR
@@ -77,7 +77,7 @@ ALTER TABLE reservation_tables
 -- Insertion des utilisateurs
 INSERT INTO users (id, email, hashed_password, fname, lname, phone, role) VALUES
 (1, 'admin@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Alice', 'Admin', 0634567890, 1),
-(2, 'user@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Bob', 'Client', 07345632298, 0);
+(2, 'user@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Bob', 'Client', 0734563298, 0);
 
 -- Insertion des tables
 INSERT INTO tables (id, seats) VALUES
