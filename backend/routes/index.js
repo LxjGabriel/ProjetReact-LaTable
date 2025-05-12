@@ -8,6 +8,7 @@ const requireRole = require('../roleMiddleware');
 
 // Controllers
 const AuthController = require('../controllers/Auth');
+const tableController = require('../controllers/table.controller');
 const MenuController = require('../controllers/Menu');
 const ReservationTableController = require('../controllers/ReservationTable');
 const ReservationController = require('../controllers/Reservation');
@@ -41,5 +42,12 @@ router.get('/reservation_table/table/:table_id', ReservationTableController.getR
 router.get('/reservation_table/reservation/:reservation_id', ReservationTableController.getReservationTableByReservationId);
 router.post('/reservation_table', ReservationTableController.createReservationTable);
 router.delete('/reservation_table/:reservation_id/:table_id', ReservationTableController.deleteReservationTable);
+
+// Routes tables
+
+router.get('/table', tableController.getAllTables);
+router.post('/table', tableController.createTable);
+router.delete('/table/:id', tableController.deleteTable);
+router.put('/table/:id', tableController.updateTable);
 
 module.exports = router;
