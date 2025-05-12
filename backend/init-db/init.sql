@@ -19,7 +19,8 @@ CREATE TABLE reservations (
     number_of_people INTEGER,
     date DATE,
     time TIME,
-    status INTEGER
+    status INTEGER,
+    opening_slot_id INTEGER,
 );
 
 -- Table: tables
@@ -58,6 +59,11 @@ ALTER TABLE reservations
     FOREIGN KEY (user_id)
     REFERENCES users (id);
 
+ALTER TABLE reservations
+    ADD CONSTRAINT fk_reservations_opening_slot_id
+    FOREIGN KEY (opening_slot_id)
+    REFERENCES opening_slots (id);
+
 -- Clé étrangère: reservation_tables.reservation_id -> reservations.id
 ALTER TABLE reservation_tables
     ADD CONSTRAINT fk_reservation_tables_reservation_id
@@ -93,13 +99,13 @@ INSERT INTO menu_items (name, description, price, category) VALUES
 
 -- Insertion de créneaux d'ouverture
 INSERT INTO opening_slots (date_time, duration, available, comment) VALUES
-('2025-05-12 12:00:00', 90, TRUE, 'Déjeuner'),
-('2025-05-12 19:00:00', 120, TRUE, 'Dîner');
+('2025-05-14 12:00:00', 90, TRUE, 'Déjeuner'),
+('2025-05-13 19:00:00', 120, TRUE, 'Dîner');
 
 -- Insertion de réservations
-INSERT INTO reservations (user_id, number_of_people, date, time, status) VALUES
-(2, 4, '2025-05-13', '19:00:00', 1),
-(2, 2, '2025-05-14', '12:30:00', 0);
+INSERT INTO reservations (user_id, number_of_people, date, time, status, opening_slot_id) VALUES
+(2, 4, '2025-05-13', '19:00:00', 1, 2),
+(2, 2, '2025-05-14', '12:00:00', 0, 1);
 
 -- Lien entre réservation et tables
 INSERT INTO reservation_tables (reservation_id, table_id) VALUES
