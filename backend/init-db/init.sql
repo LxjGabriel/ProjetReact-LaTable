@@ -3,7 +3,7 @@
 
 -- Table: users
 CREATE TABLE users (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     email VARCHAR,
     hashed_password VARCHAR,
     fname VARCHAR,
@@ -14,7 +14,7 @@ CREATE TABLE users (
 
 -- Table: reservations
 CREATE TABLE reservations (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     user_id INTEGER,
     number_of_people INTEGER,
     date DATE,
@@ -24,13 +24,13 @@ CREATE TABLE reservations (
 
 -- Table: tables
 CREATE TABLE tables (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     seats INTEGER
 );
 
 -- Table: menu_items
 CREATE TABLE menu_items (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR,
     description TEXT,
     price INTEGER,
@@ -45,7 +45,7 @@ CREATE TABLE reservation_tables (
 
 -- Table: opening_slots
 CREATE TABLE opening_slots (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     date_time TIMESTAMP,
     duration INTEGER,
     available BOOLEAN,
@@ -75,9 +75,9 @@ ALTER TABLE reservation_tables
 -- SEED DATA -- 
 
 -- Insertion des utilisateurs
-INSERT INTO users (id, email, hashed_password, fname, lname, phone, role) VALUES
-(1, 'admin@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Alice', 'Admin', 0634567890, 1),
-(2, 'user@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Bob', 'Client', 0734563298, 0);
+INSERT INTO users (email, hashed_password, fname, lname, phone, role) VALUES
+('admin@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Alice', 'Admin', 0634567890, 1),
+('user@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Bob', 'Client', 0734563298, 0);
 
 -- Insertion des tables
 INSERT INTO tables (id, seats) VALUES
@@ -86,20 +86,20 @@ INSERT INTO tables (id, seats) VALUES
 (3, 6);
 
 -- Insertion d'éléments du menu
-INSERT INTO menu_items (id, name, description, price, category) VALUES
-(1, 'Pizza Margherita', 'Tomate, mozzarella, basilic', 1200, 1),
-(2, 'Salade César', 'Poulet grillé, laitue, parmesan, croûtons', 900, 2),
-(3, 'Tiramisu', 'Dessert italien classique', 700, 3);
+INSERT INTO menu_items (name, description, price, category) VALUES
+('Pizza Margherita', 'Tomate, mozzarella, basilic', 18, 1),
+('Salade César', 'Poulet grillé, laitue, parmesan, croûtons', 14, 2),
+('Tiramisu', 'Dessert italien classique', 7, 3);
 
 -- Insertion de créneaux d'ouverture
-INSERT INTO opening_slots (id, date_time, duration, available, comment) VALUES
-(1, '2025-05-12 12:00:00', 90, TRUE, 'Déjeuner'),
-(2, '2025-05-12 19:00:00', 120, TRUE, 'Dîner');
+INSERT INTO opening_slots (date_time, duration, available, comment) VALUES
+('2025-05-12 12:00:00', 90, TRUE, 'Déjeuner'),
+('2025-05-12 19:00:00', 120, TRUE, 'Dîner');
 
 -- Insertion de réservations
-INSERT INTO reservations (id, user_id, number_of_people, date, time, status) VALUES
-(1, 2, 4, '2025-05-13', '19:00:00', 1),
-(2, 2, 2, '2025-05-14', '12:30:00', 0);
+INSERT INTO reservations (user_id, number_of_people, date, time, status) VALUES
+(2, 4, '2025-05-13', '19:00:00', 1),
+(2, 2, '2025-05-14', '12:30:00', 0);
 
 -- Lien entre réservation et tables
 INSERT INTO reservation_tables (reservation_id, table_id) VALUES
