@@ -8,7 +8,6 @@ app.use(express.json());
 // Route racine
 app.get('/', (req, res) => {
     res.json({ message: "Bienvenue sur l'API resa" });
-    // or res.send("Salut tout le monde");
 }); 
 
 

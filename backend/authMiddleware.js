@@ -15,7 +15,7 @@ function authMiddleware(req, res, next) {
     // vérifier et decoder le token
     const payload = jwt.verify(token, SECRET_KEY);
     // attacher les infos utilsiateur a req.user
-    req.user = { id: payload.userId, email: payload.email };
+    req.user = { id: payload.userId, email: payload.email, role : payload.role };
     // passer authMiddleware ou la route suivante
     next();
   } catch (err) {

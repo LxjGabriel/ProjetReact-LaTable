@@ -76,8 +76,8 @@ ALTER TABLE reservation_tables
 
 -- Insertion des utilisateurs
 INSERT INTO users (email, hashed_password, fname, lname, phone, role) VALUES
-('admin@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Alice', 'Admin', 0634567890, 1),
-('user@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Bob', 'Client', 0734563298, 0);
+('admin@example.com', '$2b$10$dQMVar006.J/j9IJOqjKpeu5.hynKBTotEnkeD56qo.6PII5r1xpG', 'Alice', 'Admin', 0634567890, 1),
+('user@example.com', '$2b$10$dQMVar006.J/j9IJOqjKpeu5.hynKBTotEnkeD56qo.6PII5r1xpG', 'Bob', 'Client', 0734563298, 0);
 
 -- Insertion des tables
 INSERT INTO tables (seats) VALUES
