@@ -16,7 +16,7 @@ class AuthController{
         try {
             // recupérer user
             const result = await pool.query(
-                'SELECT id, hashed_password from users where email = $1', [email]
+                'SELECT id, hashed_password, role from users where email = $1', [email]
             );
             const rows = result.rows;
             
@@ -25,14 +25,14 @@ class AuthController{
             }
             
             // vérifer mdp
-            const {id, hashed_password} = rows[0];
+            const {id, hashed_password, role} = rows[0];
             const valid = await bcrypt.compare(password, hashed_password);
             if (!valid) {
                 return res.status(401).json({error: 'Identifiants invalides. passwd'});
             }
         
             // générer jwt
-            const token = jwt.sign({userId: id, email}, SECRET_KEY, {
+            const token = jwt.sign({userId: id, email, role}, SECRET_KEY, {
                 expiresIn: "1h"
             });
             

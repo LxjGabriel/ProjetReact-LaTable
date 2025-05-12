@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const Role = require('../models/Role');
 
+// Middleware
+const authMiddleware = require('../authMiddleware');
+const requireRole = require('../roleMiddleware');
 // Controllers
 const AuthController = require('../controllers/Auth');
 const MenuController = require('../controllers/Menu');
 
 // Routes /user
-router.get('/auth', AuthController.getAllUsers);
+router.get('/auth', authMiddleware, requireRole(Role.ADMIN), AuthController.getAllUsers);
 router.post('/login', AuthController.login);
 router.post('/signup', AuthController.signup)
 
@@ -14,8 +18,8 @@ router.post('/signup', AuthController.signup)
 // Routes /menu
 router.get('/menu', MenuController.getAllMenus);
 router.get('/menu/:id', MenuController.getMenuById);
-router.post('/menu', MenuController.createMenu);
-router.put('/menu/:id', MenuController.updateMenu);
-router.delete('/menu/:id', MenuController.deleteMenu);
+router.post('/menu', authMiddleware, requireRole(Role.ADMIN), MenuController.createMenu);
+router.put('/menu/:id', authMiddleware, requireRole(Role.ADMIN), MenuController.updateMenu);
+router.delete('/menu/:id',  authMiddleware, requireRole(Role.ADMIN), MenuController.deleteMenu);
 
 module.exports = router;
