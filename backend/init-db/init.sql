@@ -33,7 +33,7 @@ CREATE TABLE menu_items (
     id SERIAL PRIMARY KEY,
     name VARCHAR,
     description TEXT,
-    price DECIMAL,
+    price REAL,
     category INTEGER
 );
 
@@ -80,10 +80,10 @@ INSERT INTO users (email, hashed_password, fname, lname, phone, role) VALUES
 ('user@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Bob', 'Client', 0734563298, 0);
 
 -- Insertion des tables
-INSERT INTO tables (id, seats) VALUES
-(1, 2),
-(2, 4),
-(3, 6);
+INSERT INTO tables (seats) VALUES
+(2),
+(4),
+(6);
 
 -- Insertion d'éléments du menu
 INSERT INTO menu_items (name, description, price, category) VALUES
