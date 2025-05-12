@@ -16,7 +16,7 @@ services:
 
   api:
     build: ./backend
-    container_name: task_manager_api
+    container_name: resa_api
     restart: always
     depends_on:
       - db
@@ -34,4 +34,4 @@ services:
       - /app/node_modules
 
 volumes:
-  mysql_data:
+  pgdata:
