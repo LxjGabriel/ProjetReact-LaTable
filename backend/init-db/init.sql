@@ -33,7 +33,7 @@ CREATE TABLE menu_items (
     id SERIAL PRIMARY KEY,
     name VARCHAR,
     description TEXT,
-    price INTEGER,
+    price DECIMAL,
     category INTEGER
 );
 
