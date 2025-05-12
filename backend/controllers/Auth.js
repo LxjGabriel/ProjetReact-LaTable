@@ -1,5 +1,5 @@
 const pool = require('../db');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Role = require('../models/Role');
 const SECRET_KEY = process.env.SECRET_KEY;

@@ -52,7 +52,7 @@ class MenuController{
                 'UPDATE menu_items SET name = $1, description = $2, price = $3, category = $4 WHERE id = $5 RETURNING *',
                 [name, description, price, category, id]
             );
-            res.json(result.rows[0]);
+            res.status(200).json(result.rows[0]);
         } catch (err) {
             console.error(err.message);
             res.status(500).json({ error: "Erreur serveur" });
