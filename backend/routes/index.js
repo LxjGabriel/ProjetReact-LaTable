@@ -46,10 +46,10 @@ router.delete('/reservation_table/:reservation_id/:table_id', ReservationTableCo
 
 // Routes tables
 
-router.get('/table', tableController.getAllTables);
-router.post('/table', tableController.createTable);
-router.delete('/table/:id', tableController.deleteTable);
-router.put('/table/:id', tableController.updateTable);
+router.get('/table',  authMiddleware, requireRole(), tableController.getAllTables);
+router.post('/table', authMiddleware, requireRole(Role.ADMIN), tableController.createTable);
+router.delete('/table/:id', authMiddleware, requireRole(Role.ADMIN), tableController.deleteTable);
+router.put('/table/:id', authMiddleware, requireRole(Role.ADMIN), tableController.updateTable);
 
 // Routes /opening_slots
 router.get('/opening_slot', OpeningSlotController.getAllOpeningSlots);
