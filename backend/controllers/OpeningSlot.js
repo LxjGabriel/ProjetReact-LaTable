@@ -47,14 +47,14 @@ class OpeningSlotController {
 
     // Créer un créneau d'ouverture (admin seulement)
     async createOpeningSlot(req, res) {
-        const { date_time, duration, available, comment } = req.body;
+        const { date_time, duration, comment } = req.body;
         
         if (!date_time || !duration) {
             return res.status(400).json({ error: "Date/heure et durée requises" });
         }
         
         try {
-            const newOpeningSlot = { date_time, duration, available: available || true, comment: comment || '' };
+            const newOpeningSlot = { date_time, duration, available: true, comment: comment || '' };
             const result = await OpeningSlot.create(newOpeningSlot);
             res.status(201).json({ message: 'Créneau créé', openingSlot: result.rows[0] });
         } catch (err) {

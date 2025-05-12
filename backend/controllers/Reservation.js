@@ -53,7 +53,7 @@ class ReservationController {
 
     // only for connected user
     async createReservation(req, res) {
-        const { user_id, number_of_people, date, time, status, opening_slot_id } = req.body;
+        const { user_id, number_of_people, opening_slot_id } = req.body;
         
         if (!user_id || !number_of_people || !opening_slot_id) {
             return res.status(400).json({ error: "Données de réservation incomplètes" });
@@ -72,11 +72,22 @@ class ReservationController {
             try {
                 await client.query('BEGIN');
                 
-                // Créer la réservation
-                const newReservation = {user_id, number_of_people, date, time, status, opening_slot_id};
+                // Avant l'insertion, récupérer la date et l'heure actuelles
+                const now = new Date();
+                const currentDate = now.toISOString().split('T')[0];        // YYYY-MM-DD
+                const currentTime = now.toTimeString().split(' ')[0];       // HH:MM:SS
+
                 const reservationResult = await client.query(
-                    'INSERT INTO reservations (user_id, number_of_people, date, time, status, opening_slot_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-                    [user_id, number_of_people, date, time, status, opening_slot_id]
+                    `INSERT INTO reservations
+                         (user_id,
+                            number_of_people,
+                            date,
+                            time,
+                            status,
+                            opening_slot_id)
+                     VALUES ($1, $2, $3, $4, $5, $6)
+                     RETURNING *`,
+                    [user_id, number_of_people, currentDate, currentTime, 0, opening_slot_id]
                 );
                 
                 const createdReservation = reservationResult.rows[0];
