@@ -5,6 +5,7 @@ const Role = require('../models/Role');
 // Middleware
 const authMiddleware = require('../authMiddleware');
 const requireRole = require('../roleMiddleware');
+
 // Controllers
 const AuthController = require('../controllers/Auth');
 const MenuController = require('../controllers/Menu');
@@ -26,14 +27,15 @@ router.delete('/menu/:id',  authMiddleware, requireRole(Role.ADMIN), MenuControl
 
 
 // Routes /reservation
-router.get('/reservation', ReservationController.getAllReservations);
-router.get('/reservation/:user_id', ReservationController.getMyReservations);
-router.post('/reservation', ReservationController.createReservation);
-router.put('/reservation/:id', ReservationController.updateReservation);
-router.delete('/reservation/:id', ReservationController.deleteReservation);
+router.get('/reservation', authMiddleware, requireRole(Role.ADMIN), ReservationController.getAllReservations);
+router.get('/reservation/my', authMiddleware, requireRole(), ReservationController.getMyReservations);
+router.get('/reservation/:user_id', authMiddleware, requireRole(), ReservationController.getReservationsByUserId);
+router.post('/reservation', authMiddleware, requireRole(), ReservationController.createReservation);
+router.put('/reservation/:id', authMiddleware, requireRole(), ReservationController.updateReservation);
+router.delete('/reservation/:id', authMiddleware, requireRole(), ReservationController.deleteReservation);
 
 // Routes /reservation_table
-router.get('/reservation_table', ReservationTableController.getAllReservationTables);
+router.get('/reservation_table', authMiddleware, requireRole(Role.ADMIN) ,ReservationTableController.getAllReservationTables);
 router.get('/reservation_table/table/:table_id', ReservationTableController.getReservationTableByTableId);
 router.get('/reservation_table/reservation/:reservation_id', ReservationTableController.getReservationTableByReservationId);
 router.post('/reservation_table', ReservationTableController.createReservationTable);

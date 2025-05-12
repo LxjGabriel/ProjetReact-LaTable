@@ -15,9 +15,26 @@ class ReservationController {
     }
 
     // only for connected user
-    async getMyReservations(req, res) {
+    async getReservationsByUserId(req, res) {
         const { user_id } = req.params;
 
+        if (!user_id) {
+            return res.status(400).json({ error: "ID utilisateur requis" });
+        }
+
+        try {
+            const result = await Reservation.findByUserId(user_id);
+            res.json(result.rows);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).json({ error: "Erreur serveur" });
+        }
+    }
+
+    async getMyReservations(req, res) {
+        const user_id = req.user.id;
+
+        console.log(user_id);
         if (!user_id) {
             return res.status(400).json({ error: "ID utilisateur requis" });
         }
