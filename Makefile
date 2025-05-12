@@ -1,5 +1,8 @@
 COMPOSE_FILE=docker-compose.yml
 
+build:
+	docker-compose -f $(COMPOSE_FILE) build
+
 start:
 	docker-compose -f $(COMPOSE_FILE) up -d
 
