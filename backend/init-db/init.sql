@@ -4,7 +4,7 @@
 -- Table: users
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    email VARCHAR,
+    email VARCHAR UNIQUE,
     hashed_password VARCHAR,
     fname VARCHAR,
     lname VARCHAR,
@@ -33,7 +33,7 @@ CREATE TABLE menu_items (
     id SERIAL PRIMARY KEY,
     name VARCHAR,
     description TEXT,
-    price INTEGER,
+    price REAL,
     category INTEGER
 );
 
@@ -76,20 +76,20 @@ ALTER TABLE reservation_tables
 
 -- Insertion des utilisateurs
 INSERT INTO users (email, hashed_password, fname, lname, phone, role) VALUES
-('admin@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Alice', 'Admin', 0634567890, 1),
-('user@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Bob', 'Client', 0734563298, 0);
+('admin@example.com', '$2b$10$dQMVar006.J/j9IJOqjKpeu5.hynKBTotEnkeD56qo.6PII5r1xpG', 'Alice', 'Admin', 0634567890, 1),
+('user@example.com', '$2b$10$dQMVar006.J/j9IJOqjKpeu5.hynKBTotEnkeD56qo.6PII5r1xpG', 'Bob', 'Client', 0734563298, 0);
 
 -- Insertion des tables
-INSERT INTO tables (id, seats) VALUES
-(1, 2),
-(2, 4),
-(3, 6);
+INSERT INTO tables (seats) VALUES
+(2),
+(4),
+(6);
 
 -- Insertion d'éléments du menu
 INSERT INTO menu_items (name, description, price, category) VALUES
-('Pizza Margherita', 'Tomate, mozzarella, basilic', 18, 1),
-('Salade César', 'Poulet grillé, laitue, parmesan, croûtons', 14, 2),
-('Tiramisu', 'Dessert italien classique', 7, 3);
+('Pizza Margherita', 'Tomate, mozzarella, basilic', 1200, 1),
+('Salade César', 'Poulet grillé, laitue, parmesan, croûtons', 900, 2),
+('Tiramisu', 'Dessert italien classique', 700, 3);
 
 -- Insertion de créneaux d'ouverture
 INSERT INTO opening_slots (date_time, duration, available, comment) VALUES
