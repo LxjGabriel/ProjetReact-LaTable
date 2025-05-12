@@ -12,6 +12,20 @@ class MenuController{
         }
     }
 
+    async getAllMenusByCategory(req, res) {
+        const { category } = req.params;
+        try {
+            const result = await MenuModel.getAllMenusByCategory(category);
+            if (result.rows.length === 0) {
+                return res.status(404).json({ error: "Aucun menu trouvé pour cette catégorie" });
+            }
+            res.json(result.rows);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).json({ error: "Erreur serveur" });
+        }
+    }
+
     async getMenuById(req, res) {
         const { id } = req.params;
         try {

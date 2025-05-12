@@ -18,6 +18,16 @@ class MenuModel{
         }
     }
 
+    static async getAllMenusByCategory(category) {
+        try {
+            const result = await pool.query('SELECT * FROM menu_items WHERE category = $1', [category]);
+            return result;
+        } catch (err) {
+            console.error(err.message);
+            throw new Error("Erreur serveur");
+        }
+    }
+
     static async getMenuById(id) {
         try {
             const result = await pool.query('SELECT * FROM menu_items WHERE id = $1', [id]);

@@ -20,6 +20,7 @@ router.post('/signup', AuthController.signup)
 
 // Routes /menu
 router.get('/menu', MenuController.getAllMenus);
+router.get('/menu/category/:category', MenuController.getAllMenusByCategory);
 router.get('/menu/:id', MenuController.getMenuById);
 router.post('/menu', authMiddleware, requireRole(Role.ADMIN), MenuController.createMenu);
 router.put('/menu/:id', authMiddleware, requireRole(Role.ADMIN), MenuController.updateMenu);
