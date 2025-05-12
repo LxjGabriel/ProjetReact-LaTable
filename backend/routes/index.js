@@ -12,6 +12,7 @@ const tableController = require('../controllers/table.controller');
 const MenuController = require('../controllers/Menu');
 const ReservationTableController = require('../controllers/ReservationTable');
 const ReservationController = require('../controllers/Reservation');
+const OpeningSlotController = require('../controllers/OpeningSlot');
 
 // Routes /user
 router.get('/auth', authMiddleware, requireRole(Role.ADMIN), AuthController.getAllUsers);
@@ -49,5 +50,14 @@ router.get('/table', tableController.getAllTables);
 router.post('/table', tableController.createTable);
 router.delete('/table/:id', tableController.deleteTable);
 router.put('/table/:id', tableController.updateTable);
+
+// Routes /opening_slots
+router.get('/opening_slot', OpeningSlotController.getAllOpeningSlots);
+router.get('/opening_slot/available', OpeningSlotController.getAllAvailableOpeningSlots);
+router.get('/opening_slot/:id', OpeningSlotController.getOpeningSlotById);
+router.post('/opening_slot', authMiddleware, requireRole(Role.ADMIN), OpeningSlotController.createOpeningSlot);
+router.put('/opening_slot/:id', authMiddleware, requireRole(Role.ADMIN), OpeningSlotController.updateOpeningSlot);
+router.delete('/opening_slot/:id', authMiddleware, requireRole(Role.ADMIN), OpeningSlotController.deleteOpeningSlot);
+router.put('/opening_slot/:id/check-availability', OpeningSlotController.checkAndUpdateSlotAvailability);
 
 module.exports = router;

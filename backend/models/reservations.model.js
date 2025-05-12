@@ -1,20 +1,28 @@
 const db = require('../db');
 
 module.exports = class Reservation {
-  constructor(id, user_id, number_of_people, date, time, status) {
+  constructor(id, user_id, number_of_people, date, time, status, opening_slot_id) {
     this.id = id;
     this.user_id = user_id;
     this.number_of_people = number_of_people;
     this.date = date;
     this.time = time;
     this.status = status;
+    this.opening_slot_id = opening_slot_id;
   }
 
   // Créer une nouvelle réservation
   static create(newReservation) {
     return db.query(
-      'INSERT INTO reservations (user_id, number_of_people, date, time, status) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [newReservation.user_id, newReservation.number_of_people, newReservation.date, newReservation.time, newReservation.status]
+      'INSERT INTO reservations (user_id, number_of_people, date, time, status, opening_slot_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [
+        newReservation.user_id, 
+        newReservation.number_of_people, 
+        newReservation.date, 
+        newReservation.time, 
+        newReservation.status,
+        newReservation.opening_slot_id
+      ]
     );
   }
 

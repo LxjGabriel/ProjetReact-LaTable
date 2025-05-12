@@ -20,7 +20,7 @@ CREATE TABLE reservations (
     date DATE,
     time TIME,
     status INTEGER,
-    opening_slot_id INTEGER,
+    opening_slot_id INTEGER
 );
 
 -- Table: tables
