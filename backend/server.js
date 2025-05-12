@@ -12,91 +12,8 @@ app.use(express.json());
 
 // Route racine
 app.get('/', (req, res) => {
-    res.json({ message: "Bienvenue sur l'API Task Manager" });
+    res.json({ message: "Bienvenue sur l'API resa" });
     // or res.send("Salut tout le monde");
-});
-
-// Route pour lister les tâches
-app.get('/api/tasks', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM tasks');
-        res.json(result.rows);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ error: "Erreur serveur" });
-    }
-});
-
-// Route pour créer une tâche
-app.post('/api/tasks', async (req, res) => {
-    try {
-        const { title, description } = req.body;
-
-        // → Validation du payload
-        if (typeof title !== 'string' || title.trim() === '') {
-          return res
-          .status(400)
-          .json({ error: 'Le champ "title" est obligatoire et doit être une chaîne non vide.' });
-        }
-        const result = await pool.query(
-            'INSERT INTO tasks (title, description) VALUES ($1, $2) RETURNING *',
-            [title, description]
-        );
-        res.status(201).json(result.rows[0]);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ error: "Erreur serveur" });
-    }
-});
-
-app.get('/api/tasks/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
-      const result = await pool.query('SELECT * FROM tasks WHERE id = $1', [id]);
-  
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: 'Tâche non trouvée' });
-      }
-  
-      res.json(result.rows[0]);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  });
-
-app.put('/api/tasks/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { title, description, status } = req.body;
-
-    const result = await pool.query(
-      'UPDATE tasks SET title = $1, description = $2, status = $3 WHERE id = $4 RETURNING *',
-      [title, description, status, id]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Tâche non trouvée' });
-    }
-
-    res.json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.delete('/api/tasks/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = await pool.query('DELETE FROM tasks WHERE id = $1 RETURNING *', [id]);
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Tâche non trouvée' });
-    }
-
-    res.sendStatus(204); // Suppression réussie, pas de contenu à retourner
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
 });
 
 app.post('/signup', async (req, res) => {
@@ -107,7 +24,7 @@ app.post('/signup', async (req, res) => {
     typeof password !== 'string' || password.length < 6
   ) {
     return res.status(400).json({
-      error: 'Username non vide requis, mot de passe d’au moins 6 caractères.'
+      error: 'Username non vide requis, mot de passe d\'au moins 6 caractères.'
     });
   }
   try {
