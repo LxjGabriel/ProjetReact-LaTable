@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const SECRET_KEY = "my_key";
+const SECRET_KEY = process.env.SECRET_KEY;
 
 function authMiddleware(req, res, next) {
   // recupérer token depuis en tete bearer token
@@ -15,7 +15,7 @@ function authMiddleware(req, res, next) {
     // vérifier et decoder le token
     const payload = jwt.verify(token, SECRET_KEY);
     // attacher les infos utilsiateur a req.user
-    req.user = { id: payload.userId, username: payload.username };
+    req.user = { id: payload.userId, email: payload.email };
     // passer authMiddleware ou la route suivante
     next();
   } catch (err) {
