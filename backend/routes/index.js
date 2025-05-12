@@ -7,6 +7,7 @@ const authMiddleware = require('../authMiddleware');
 const requireRole = require('../roleMiddleware');
 // Controllers
 const AuthController = require('../controllers/Auth');
+const tableController = require('../controllers/table.controller');
 const MenuController = require('../controllers/Menu');
 
 // Routes /user
@@ -22,5 +23,12 @@ router.get('/menu/:id', MenuController.getMenuById);
 router.post('/menu', authMiddleware, requireRole(Role.ADMIN), MenuController.createMenu);
 router.put('/menu/:id', authMiddleware, requireRole(Role.ADMIN), MenuController.updateMenu);
 router.delete('/menu/:id',  authMiddleware, requireRole(Role.ADMIN), MenuController.deleteMenu);
+
+// Routes tables
+
+router.get('/table', tableController.getAllTables);
+router.post('/table', tableController.createTable);
+router.delete('/table/:id', tableController.deleteTable);
+router.put('/table/:id', tableController.updateTable);
 
 module.exports = router;

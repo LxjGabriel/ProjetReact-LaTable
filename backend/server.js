@@ -2,6 +2,7 @@ const express = require('express');
 
 const app = express();
 const port = process.env.PORT || 3000;
+const TableController = require('./controllers/table.controller');
 
 app.use(express.json());
 
@@ -9,6 +10,11 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.json({ message: "Bienvenue sur l'API resa" });
 }); 
+// Endpoints manuales
+app.get('/tables', TableController.getAllTables);
+app.post('/tables', TableController.createTable);
+app.put('/tables/:id', TableController.updateTable);
+app.delete('/tables/:id', TableController.deleteTable);
 
 
 const routes = require('./routes');
