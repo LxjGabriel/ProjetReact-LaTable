@@ -69,3 +69,39 @@ ALTER TABLE reservation_tables
     ADD CONSTRAINT fk_reservation_tables_table_id
     FOREIGN KEY (table_id)
     REFERENCES tables (id);
+
+
+
+-- SEED DATA -- 
+
+-- Insertion des utilisateurs
+INSERT INTO users (id, email, hashed_password, fname, lname, phone, role) VALUES
+(1, 'admin@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Alice', 'Admin', 0634567890, 1),
+(2, 'user@example.com', '$2b$10$QmZkbnZLZTeXUqz9/jATFez1i6zZoKwR65u/3Zj5V7RE71nJ9Mf3y', 'Bob', 'Client', 07345632298, 0);
+
+-- Insertion des tables
+INSERT INTO tables (id, seats) VALUES
+(1, 2),
+(2, 4),
+(3, 6);
+
+-- Insertion d'éléments du menu
+INSERT INTO menu_items (id, name, description, price, category) VALUES
+(1, 'Pizza Margherita', 'Tomate, mozzarella, basilic', 1200, 1),
+(2, 'Salade César', 'Poulet grillé, laitue, parmesan, croûtons', 900, 2),
+(3, 'Tiramisu', 'Dessert italien classique', 700, 3);
+
+-- Insertion de créneaux d'ouverture
+INSERT INTO opening_slots (id, date_time, duration, available, comment) VALUES
+(1, '2025-05-12 12:00:00', 90, TRUE, 'Déjeuner'),
+(2, '2025-05-12 19:00:00', 120, TRUE, 'Dîner');
+
+-- Insertion de réservations
+INSERT INTO reservations (id, user_id, number_of_people, date, time, status) VALUES
+(1, 2, 4, '2025-05-13', '19:00:00', 1),
+(2, 2, 2, '2025-05-14', '12:30:00', 0);
+
+-- Lien entre réservation et tables
+INSERT INTO reservation_tables (reservation_id, table_id) VALUES
+(1, 2),
+(2, 1);
