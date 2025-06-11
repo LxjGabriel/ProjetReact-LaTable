@@ -16,7 +16,7 @@ class AuthController{
         try {
             // recupérer user
             const result = await pool.query(
-                'SELECT id, hashed_password, role from users where email = $1', [email]
+                'SELECT id, hashed_password, role, fname, lname from users where email = $1', [email]
             );
             const rows = result.rows;
             
@@ -25,7 +25,7 @@ class AuthController{
             }
             
             // vérifer mdp
-            const {id, hashed_password, role} = rows[0];
+            const {id, hashed_password, role, fname, lname} = rows[0];
             const valid = await bcrypt.compare(password, hashed_password);
             if (!valid) {
                 return res.status(401).json({error: 'Identifiants invalides. passwd'});
@@ -37,7 +37,7 @@ class AuthController{
             });
             
             //renvoyer le token
-            res.json({ token });
+            res.json({ token, user: { id, email, role, fname, lname } });
         } catch (err) {
             res.status(500).json({ error: err.message})
         }

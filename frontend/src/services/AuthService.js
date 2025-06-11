@@ -13,8 +13,8 @@ const AuthService = {
     if (response.status !== 200) {
       throw new Error('Login failed');
     }
-    console.log(response.data);
     localStorageHelper.storeData('token', response.data.token);
+    localStorageHelper.storeData('user', JSON.stringify(response.data.user));
   },
 
   Signup: async (email, password, fname, lname, phone, role) => {
