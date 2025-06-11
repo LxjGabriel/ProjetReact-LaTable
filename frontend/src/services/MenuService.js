@@ -20,11 +20,15 @@ const MenuService = {
     },
 
     async GetAllMenuByCategory(category) {
-        const response = await axiosInstance.get(`${API_URL}/category/${category}`);
-        if (response.status !== 200) {
-            throw new Error('Failed to fetch menus by category');
+        try {
+            const response = await axiosInstance.get(`${API_URL}/category/${category}`);
+            return response.data; 
+        } catch (error) {
+            if( error.response && error.response.status === 404) {
+                return []; // Return an empty array if no menus found for the category
+            }
         }
-        return response.data;
+        
     },
 
     async CreateMenu(menuData) {
@@ -45,7 +49,7 @@ const MenuService = {
 
     async DeleteMenu(id) {
         const response = await axiosInstance.delete(`${API_URL}/${id}`);
-        if (response.status !== 200) {
+        if (response.status !== 204) {
             throw new Error('Failed to delete menu');
         }
         return response.data;

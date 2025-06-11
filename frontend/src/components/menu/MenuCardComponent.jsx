@@ -1,4 +1,20 @@
-export default function MenuCardComponent({ title, items }) {
+import ButtonComponent from "../form/ButtonComponent";
+import { MenuService } from "../../services/MenuService";
+
+export default function MenuCardComponent({ title, items = [] }) {
+
+    const handleDelete = async (id) => {
+        if (window.confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) {
+            try {
+                await MenuService.DeleteMenu(id);
+                window.location.reload();
+            } catch (error) {
+                console.error("Erreur lors de la suppression du menu :", error);
+                alert("Une erreur s'est produite lors de la suppression du menu. Veuillez réessayer plus tard.");
+            }
+        }
+    }
+
     return (
         <div className="card mb-3">
             <div className="card-header">
@@ -14,6 +30,10 @@ export default function MenuCardComponent({ title, items }) {
                                     <em>{item.description}</em>
                                 </div>
                                 <h3>{item.price} €</h3>
+                                <ButtonComponent
+                                    label="Supprimer"
+                                    onClick={() => handleDelete(item.id)}
+                                    severity="danger" />
                             </li>
                         ))}
                     </ul>

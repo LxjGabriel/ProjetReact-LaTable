@@ -23,7 +23,6 @@ export default function MenuHome() {
                 setBoisson(boisson);
             } catch (err) {
                 console.error("Erreur lors de la récupération des menus :", err);
-                alert("Une erreur s'est produite lors de la récupération des menus. Veuillez réessayer plus tard.");
             } finally {
                 setLoading(false);
             }
