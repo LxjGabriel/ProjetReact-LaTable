@@ -1,7 +1,7 @@
 import localStorageHelper from "./localStorageHelper";
 
 export var axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "http://localhost:3000",
   timeout: 8000,
   headers: {
     'Content-Type': 'application/json',
