@@ -109,6 +109,20 @@
   color: #212529;
 }
 
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #565e64;
+  border-color: #565e64;
+  color: #fff;
+  outline: none;
+}
+
 /* Labels de formulaire */
 .form-label {
   display: block;

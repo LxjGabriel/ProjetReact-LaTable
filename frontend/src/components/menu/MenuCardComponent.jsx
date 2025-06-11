@@ -1,5 +1,6 @@
-import ButtonComponent from "../form/ButtonComponent";
+import { AuthService } from "../../services/AuthService";
 import { MenuService } from "../../services/MenuService";
+import MenuActionsPopover from "../MenuActionsPopover";
 
 export default function MenuCardComponent({ title, items = [] }) {
 
@@ -28,20 +29,18 @@ export default function MenuCardComponent({ title, items = [] }) {
                 {items.length > 0 ? (
                     <ul>
                         {items.map((item, index) => (
-                            <li key={index}>
+                            <li key={index} style={{display: 'flex', gap: '3em', justifyContent: 'center' , alignItems: 'center'}}>
                                 <div>
                                     <p>{item.name}</p>
                                     <em>{item.description}</em>
+                                    <h3>{item.price} €</h3>
                                 </div>
-                                <h3>{item.price} €</h3>
-                                <ButtonComponent
-                                    label="Supprimer"
-                                    onClick={() => handleDelete(item.id)}
-                                    severity="danger" />
-                                <ButtonComponent
-                                    label="Modifier"
-                                    onClick={() => handleUpdate(item.id)}
-                                    severity="warn" />
+                                {AuthService.IsConnected() && AuthService.GetUser().role === 1 && (
+                                    <MenuActionsPopover
+                                        onDelete={() => handleDelete(item.id)}
+                                        onEdit={() => handleUpdate(item.id)}
+                                    />
+                                )}
                             </li>
                         ))}
                     </ul>
