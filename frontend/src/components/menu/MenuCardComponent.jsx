@@ -15,6 +15,10 @@ export default function MenuCardComponent({ title, items = [] }) {
         }
     }
 
+    const handleUpdate = (id) => {
+        window.location.href = `/menu/edit/${id}`;
+    }
+
     return (
         <div className="card mb-3">
             <div className="card-header">
@@ -34,6 +38,10 @@ export default function MenuCardComponent({ title, items = [] }) {
                                     label="Supprimer"
                                     onClick={() => handleDelete(item.id)}
                                     severity="danger" />
+                                <ButtonComponent
+                                    label="Modifier"
+                                    onClick={() => handleUpdate(item.id)}
+                                    severity="warn" />
                             </li>
                         ))}
                     </ul>

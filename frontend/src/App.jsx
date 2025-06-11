@@ -7,6 +7,7 @@ import Home from './views/Home'
 import Logout from './views/auth/Logout'
 import MenuHome from './views/menu/MenuHome'
 import MenuAdd from './views/menu/MenuAdd'
+import MenuEdit from './views/menu/MenuEdit'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/menu" element={<MenuHome />} />
         <Route path="/menu/create" element={<MenuAdd />} />
+        <Route path="/menu/edit/:id" element={<MenuEdit />} />
       </Routes>
     </>
   )
