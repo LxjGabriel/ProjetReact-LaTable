@@ -1,5 +1,4 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -43,7 +42,7 @@
 
 /* Container général pour les pages et formulaires */
 .container {
-  max-width: 500px;
+  max-width: 1900px;
   margin: 2rem auto;
   background: #fff;
   border-radius: 12px;
