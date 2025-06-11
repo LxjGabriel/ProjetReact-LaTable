@@ -14,7 +14,7 @@ const AuthService = {
       throw new Error('Login failed');
     }
     localStorageHelper.storeData('token', response.data.token);
-    localStorageHelper.storeData('user', JSON.stringify(response.data.user));
+    localStorageHelper.storeData('user', response.data.user);
   },
 
   Signup: async (email, password, fname, lname, phone, role) => {
@@ -40,7 +40,12 @@ const AuthService = {
 
   Logout: () => {
     localStorageHelper.removeData('token');
-  }
+  },
+
+  GetUser: () => {
+    const user = localStorageHelper.getData('user');
+    return user ? user : null;
+  },
 };
 
 export { AuthService };

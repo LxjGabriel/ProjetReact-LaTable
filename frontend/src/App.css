@@ -1,5 +1,4 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -43,7 +42,7 @@
 
 /* Container général pour les pages et formulaires */
 .container {
-  max-width: 500px;
+  max-width: 1900px;
   margin: 2rem auto;
   background: #fff;
   border-radius: 12px;
@@ -82,6 +81,46 @@
   background-color: #535bf2;
   border-color: #535bf2;
   color: #fff;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+  background-color: #b52a37;
+  border-color: #b52a37;
+  color: #fff;
+}
+
+.btn-warn {
+  background-color: #ffc107;
+  color: #212529;
+  border-color: #ffc107;
+}
+
+.btn-warn:hover,
+.btn-warn:focus {
+  background-color: #e0a800;
+  border-color: #e0a800;
+  color: #212529;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #565e64;
+  border-color: #565e64;
+  color: #fff;
+  outline: none;
 }
 
 /* Labels de formulaire */
