@@ -1,4 +1,5 @@
 import localStorageHelper from "./localStorageHelper";
+import axios from "axios";
 
 export var axiosInstance = axios.create({
   baseURL: "http://localhost:3000",
