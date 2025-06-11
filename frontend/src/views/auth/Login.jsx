@@ -23,8 +23,7 @@ export default function Signup() {
                 formData.email,
                 formData.password,
             );
-           console.log("Connexion réussie");
-           
+            window.location.href = "/";
         } catch (error) {
             alert(error.message || "Une erreur s'est produite lors de la connexion.");
         }

@@ -1,3 +1,4 @@
+import Logout from "../views/auth/Logout";
 import { axiosInstance } from "./AxiosInstance";
 import localStorageHelper from "./localStorageHelper";
 
@@ -31,6 +32,15 @@ const AuthService = {
       throw new Error('Signup failed');
     }
   },
+
+  IsConnected: () => {
+    const token = localStorageHelper.getData('token');
+    return token !== null && token !== undefined;
+  },
+
+  Logout: () => {
+    localStorageHelper.removeData('token');
+  }
 };
 
 export { AuthService };
