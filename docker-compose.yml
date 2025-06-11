@@ -33,6 +33,19 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+  
+  frontend:
+    build: ./frontend
+    container_name: resa_frontend
+    restart: always
+    ports:
+      - "3001:3000"
+    environment:
+      NODE_ENV: development
+      SECRET_KEY: 1234567890123432
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
 volumes:
   pgdata:
