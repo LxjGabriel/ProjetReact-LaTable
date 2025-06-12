@@ -5,10 +5,11 @@ import {ReservationService} from '../../services/ReservationService';
 import { AuthService } from '../../services/AuthService';
 import localStorageHelper from '../../services/localStorageHelper';
 import OpeningSlotsService from '../../services/OpeningSlotsService';
-import ToastContainer, { showToast } from '../../components/ToastContainer';
+import ToastService from "../../services/ToastService";
+import { useNavigate } from "react-router-dom";
 
 export default function NewReservation() {
-    
+    const navigate = useNavigate()
     const [slots_available, setSlotsAvailable] = useState([]);
     const [formData, setFormData] = useState({
             number_of_people: '',
@@ -61,21 +62,22 @@ export default function NewReservation() {
                 parseInt(formData.number_of_people),
                 parseInt(formData.opening_slot_id)
             );
-            showToast('Réservation créée avec succès!', "success", 3000);
+            ToastService.success("Reservation réussie !");
+            navigate("/my-reservations")
             setFormData({
                 number_of_people: '',
                 opening_slot_id: ''
             });
             await reloadSlots();
+            
         } catch (error) {
             const errorMessage = error.response?.data?.error || error.message || "Une erreur s'est produite";
-            showToast(errorMessage, "danger", 3000);
+            ToastService.danger(errorMessage ||"Pas assez de places disponibles pour ce créneau")
         }
     }
     
     return (
         <div className="container">
-            <ToastContainer />
             <h1>Faire une nouvelle réservation</h1>
             <form onSubmit={handleSubmit}>
                 
