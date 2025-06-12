@@ -9,6 +9,9 @@ export default function Reservations() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [users, setUsers] = useState({});
+    const [dateFrom, setDateFrom] = useState('');
+    const [dateTo, setDateTo] = useState('');
+    const [statusFilter, setStatusFilter] = useState('all');
 
     useEffect(() => {
         const fetchReservations = async () => {
@@ -73,25 +76,87 @@ export default function Reservations() {
         }
     };
 
-  const getStatusText = (status) => {
-    const statuses = { 0: 'En attente', 1: 'Confirmée', 2: 'Annulée' };
-    return statuses[status] || 'Inconnu';
-  };
+    const getFilteredReservations = () => {
+        return reservations.filter(reservation => {
+            const reservationDate = new Date(reservation.date).toISOString().split('T')[0];
+            
+            const matchDateFrom = !dateFrom || reservationDate >= dateFrom;
+            const matchDateTo = !dateTo || reservationDate <= dateTo;
+            const matchStatus = statusFilter === 'all' || 
+                reservation.status === parseInt(statusFilter);
+            
+            return matchDateFrom && matchDateTo && matchStatus;
+        });
+    };
 
-  const getStatusColor = (status) => {
-    const colors = { 0: '#ffa500', 1: '#28a745', 2: '#dc3545' };
-    return colors[status] || '#6c757d';
-  };
+    const filteredReservations = getFilteredReservations();
+
+    const getStatusText = (status) => {
+        const statuses = { 0: 'En attente', 1: 'Confirmée', 2: 'Annulée' };
+        return statuses[status] || 'Inconnu';
+    };
+
+    const getStatusColor = (status) => {
+        const colors = { 0: '#ffa500', 1: '#28a745', 2: '#dc3545' };
+        return colors[status] || '#6c757d';
+    };
 
     return (
         <div className='container'>
             <h1>Liste des Réservations</h1>
 
+<div style={{marginBottom: '20px', padding: '20px', backgroundColor: '#ffffff', borderRadius: '8px', border: '1px solid #dee2e6', boxShadow: '0 2px 4px rgba(0,0,0,0.1)'}}>
+    <div style={{display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'end', marginBottom: '15px'}}>
+        <div style={{minWidth: '150px'}}>
+            <label style={{display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '5px', color: '#495057'}}>Date de début :</label>
+            <input 
+                type="date" 
+                value={dateFrom}
+                onChange={(e) => setDateFrom(e.target.value)}
+                style={{width: '100%', padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px', fontSize: '14px'}}
+            />
+        </div>
+        <div style={{minWidth: '150px'}}>
+            <label style={{display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '5px', color: '#495057'}}>Date de fin :</label>
+            <input 
+                type="date" 
+                value={dateTo}
+                onChange={(e) => setDateTo(e.target.value)}
+                style={{width: '100%', padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px', fontSize: '14px'}}
+            />
+        </div>
+        <div style={{minWidth: '150px'}}>
+            <label style={{display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '5px', color: '#495057'}}>Statut :</label>
+            <select 
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                style={{width: '100%', padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px', fontSize: '14px', backgroundColor: 'white'}}
+            >
+                <option value="all">Tous les statuts</option>
+                <option value="0">En attente</option>
+                <option value="1">Confirmée</option>
+                <option value="2">Annulée</option>
+            </select>
+        </div>
+        <div>
+            <button 
+                onClick={() => {setDateFrom(''); setDateTo(''); setStatusFilter('all');}}
+                style={{padding: '8px 16px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '4px', fontSize: '14px', cursor: 'pointer'}}
+            >
+                Réinitialiser
+            </button>
+        </div>
+    </div>
+    <div style={{fontSize: '14px', color: '#6c757d', textAlign: 'right', borderTop: '1px solid #eee', paddingTop: '10px'}}>
+        <strong>{filteredReservations.length}</strong> sur <strong>{reservations.length}</strong> réservations affichées
+    </div>
+</div>
+
             {loading ? (
                 <p>Chargement des réservations...</p>
             ) : error ? (
                 <p className="error">{error}</p>
-            ) : reservations.length === 0 ? (
+            ) : filteredReservations.length === 0 ? (
                 <p>Aucune réservation trouvée.</p>
             ) : (
                 <div className="table-container">
@@ -109,7 +174,7 @@ export default function Reservations() {
                             </tr>
                         </thead>
                         <tbody>
-                            {reservations.map((reservation) => (
+                            {filteredReservations.map((reservation) => (
                                 <tr key={reservation.id}>
                                     <td>{reservation.id}</td>
                                     <td>{new Date(reservation.date).toLocaleDateString('fr-FR')}</td>
