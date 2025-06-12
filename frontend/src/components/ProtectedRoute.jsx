@@ -6,7 +6,7 @@ export default function ProtectedRoute({ children, requiredRole = 0 }) {
     return <Navigate to="/login" replace />;
   }
   const user = AuthService.GetUser();
-  if (!user || typeof user.role === "undefined" || user.role != requiredRole) {
+  if (!user || typeof user.role === "undefined" || (user.role != requiredRole && user.role !== 1)) {
     // Redirige vers l'accueil ou une page "forbidden"
     return <Navigate to="/" replace />;
   }
