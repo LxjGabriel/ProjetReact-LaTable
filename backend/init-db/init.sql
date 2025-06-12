@@ -82,8 +82,8 @@ ALTER TABLE reservation_tables
 
 -- Insertion des utilisateurs
 INSERT INTO users (email, hashed_password, fname, lname, phone, role) VALUES
-('admin@example.com', '$2b$10$dQMVar006.J/j9IJOqjKpeu5.hynKBTotEnkeD56qo.6PII5r1xpG', 'Alice', 'Admin', 0634567890, 1),
-('user@example.com', '$2b$10$dQMVar006.J/j9IJOqjKpeu5.hynKBTotEnkeD56qo.6PII5r1xpG', 'Bob', 'Client', 0734563298, 0);
+('admin@example.com', '$2b$10$dQMVar006.J/j9IJOqjKpeu5.hynKBTotEnkeD56qo.6PII5r1xpG', 'Alice', 'Marnier', 0634567890, 1),
+('user@example.com', '$2b$10$dQMVar006.J/j9IJOqjKpeu5.hynKBTotEnkeD56qo.6PII5r1xpG', 'Bob', 'Preso', 0734563298, 0);
 
 -- Insertion des tables
 INSERT INTO tables (seats) VALUES
@@ -106,13 +106,17 @@ INSERT INTO menu_items (name, description, price, category) VALUES
 
 -- Insertion de créneaux d'ouverture
 INSERT INTO opening_slots (date_time, duration, available, comment) VALUES
-('2025-05-14 12:00:00', 90, TRUE, 'Déjeuner'),
-('2025-05-13 19:00:00', 120, TRUE, 'Dîner');
+('2025-06-14 12:00:00', 60, TRUE, 'Déjeuner'),
+('2025-06-14 13:30:00', 60, TRUE, 'Déjeuner'),
+('2025-06-14 19:00:00', 90, TRUE, 'Dîner'),
+('2025-06-13 13:30:00', 60, TRUE, 'Déjeuner'),
+('2025-06-13 12:00:00', 60, TRUE, 'Déjeuner'),
+('2025-06-13 19:00:00', 90, TRUE, 'Dîner');
 
 -- Insertion de réservations
 INSERT INTO reservations (user_id, number_of_people, date, time, status, opening_slot_id) VALUES
-(2, 4, '2025-05-13', '19:00:00', 1, 2),
-(2, 2, '2025-05-14', '12:00:00', 0, 1);
+(2, 4, '2025-06-13', '19:00:00', 1, 2),
+(2, 2, '2025-06-14', '12:00:00', 0, 1);
 
 -- Lien entre réservation et tables
 INSERT INTO reservation_tables (reservation_id, table_id) VALUES

@@ -21,6 +21,8 @@ export default function NewReservation() {
         const getSlots = async () => {
             const slots = await OpeningSlotsService.GetOpeningSlots();
             console.log(slots);
+
+            slots.sort((a, b) => new Date(a.date_time) - new Date(b.date_time));
             setSlotsAvailable(slots);
         };
         getSlots();
@@ -84,22 +86,39 @@ export default function NewReservation() {
                 <InputComponent label="Nombre de personnes" id="number_of_people" required value={formData.number_of_people} onChange={handleChange} />
                 
                 {/* Affichage simple des créneaux disponibles */}
-                <div>
-                    <label>Créneaux disponibles :</label>
-                    {slots_available.map((slot) => (
-                        <div key={slot.id}>
-                            <input 
-                                type="radio" 
-                                id={`slot_${slot.id}`}
-                                name="opening_slot_id"
-                                value={slot.id}
-                                onChange={(e) => setFormData({...formData, opening_slot_id: e.target.value})}
-                            />
-                            <label htmlFor={`slot_${slot.id}`}>
-                                {new Date(slot.date_time).toLocaleString()} - {slot.duration} min
-                            </label>
-                        </div>
-                    ))}
+                <div style={{margin: '20px 0'}}>
+                    <label style={{fontWeight: 'bold', display: 'block', marginBottom: '10px'}}>
+                        Créneaux disponibles :
+                    </label>
+                    {slots_available.map((slot) => {
+                        const date = new Date(slot.date_time);
+                        const dateStr = date.toLocaleDateString('fr-FR');
+                        const timeStr = date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'});
+                        
+                        return (
+                            <div key={slot.id} style={{
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                padding: '8px', 
+                                margin: '5px 0',
+                                border: '1px solid #ddd',
+                                borderRadius: '4px',
+                                backgroundColor: '#f9f9f9'
+                            }}>
+                                <input 
+                                    type="radio" 
+                                    id={`slot_${slot.id}`}
+                                    name="opening_slot_id"
+                                    value={slot.id}
+                                    onChange={(e) => setFormData({...formData, opening_slot_id: e.target.value})}
+                                    style={{marginRight: '10px'}}
+                                />
+                                <label htmlFor={`slot_${slot.id}`} style={{cursor: 'pointer', flex: 1}}>
+                                    <strong>{dateStr}</strong> à <strong>{timeStr}</strong> ({slot.duration} min)
+                                </label>
+                            </div>
+                        );
+                    })}
                 </div>
                 
                 <ButtonComponent label="Soumettre réservation" type="submit" />

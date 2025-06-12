@@ -9,7 +9,22 @@ export default function ReservationButton({
 }) {
     
     // Vérifier si l'utilisateur est connecté
+    // if (!AuthService.IsConnected()) {
+    //     return null;
+    // }
+
     if (!AuthService.IsConnected()) {
+        return (
+            <div className="mb-3">
+                <Link to="/login" className={className}>
+                    {text}
+                </Link>
+                <p className="text-muted">* Veuillez vous connecter pour faire une réservation.</p>
+            </div>
+        );
+    }
+
+    if (AuthService.IsAdmin()) {
         return null;
     }
 
