@@ -185,6 +185,56 @@ h1 {
   color: #213547;
 }
 
+/* Toast notifications */
+.toast {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  min-width: 220px;
+  padding: 1em 1.5em;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1em;
+  z-index: 9999;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  opacity: 0.97;
+  animation: toast-in 0.3s;
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-20px);}
+  to { opacity: 0.97; transform: translateY(0);}
+}
+.toast-success {
+  background: #28a745;
+}
+.toast-danger {
+  background: #dc3545;
+}
+.toast-warn {
+  background: #ffc107;
+  color: #212529;
+  border: 1px solid #ffc107;
+}
+
+/* Alerts */
+.alert {
+  padding: 1em 1.2em;
+  margin-bottom: 1.2em;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 500;
+  border: 1px solid transparent;
+  background: #f8d7da;
+  color: #842029;
+}
+
+.alert-danger {
+  background: #f8d7da;
+  color: #842029;
+  border-color: #f5c2c7;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .container {

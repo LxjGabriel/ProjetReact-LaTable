@@ -5,9 +5,13 @@ import InputComponent from "../../components/form/InputComponent";
 import ButtonComponent from "../../components/form/ButtonComponent";
 import SelectComponent from "../../components/form/SelectComponent";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ToastService from "../../services/ToastService";
 
 
 export default function MenuEdit() {
+
+    const nav = useNavigate();
 
     const { id } = useParams();
 
@@ -17,6 +21,7 @@ export default function MenuEdit() {
         price: '',
         category: '', // 0: Entrée, 1: Plat, 2: Dessert, 3: Boisson
     });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
             const fetchMenu = async () => {
@@ -28,8 +33,11 @@ export default function MenuEdit() {
                         price: menu.price,
                         category: menu.category.toString()
                     });
-                } catch (err) {
-                    console.error("Erreur lors de la récupération des menus :", err);
+                } catch (error) {
+                    if (error.status === 404) {
+                        ToastService.danger("Menu non trouvé. Veuillez vérifier l'ID.");
+                        nav("/menu");
+                    }
                 } finally {
                     setLoading(false);
                 }
@@ -51,10 +59,10 @@ export default function MenuEdit() {
                 id,
                 formData
             ).then(() => {
-                window.location.href = "/menu";
+                ToastService.success("Menu modifié avec succès !");
+                nav("/menu");
             }).catch((error) => {
-                console.error("Erreur lors de la création du menu :", error);
-                alert("Une erreur s'est produite lors de la création du menu. Veuillez réessayer plus tard.");
+                ToastService.danger("Une erreur s'est produite lors de la modification du menu. Veuillez réessayer plus tard.");
             }); 
         } catch (error) {
             alert(error.message || "Une erreur s'est produite lors de la connexion.");

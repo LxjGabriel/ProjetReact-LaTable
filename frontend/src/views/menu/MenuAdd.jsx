@@ -3,8 +3,12 @@ import { MenuService } from "../../services/MenuService";
 import InputComponent from "../../components/form/InputComponent";
 import ButtonComponent from "../../components/form/ButtonComponent";
 import SelectComponent from "../../components/form/SelectComponent";
+import ToastService from "../../services/ToastService";
+import { useNavigate } from "react-router-dom";
 
 export default function MenuAdd() {
+
+    const nav = useNavigate();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -26,13 +30,14 @@ export default function MenuAdd() {
            MenuService.CreateMenu(
                 formData
             ).then(() => {
-                window.location.href = "/menu";
+                ToastService.success("Menu créé avec succès !");
+                nav("/menu");
             }).catch((error) => {
                 console.error("Erreur lors de la création du menu :", error);
-                alert("Une erreur s'est produite lors de la création du menu. Veuillez réessayer plus tard.");
+                ToastService.danger("Une erreur s'est produite lors de la création du menu. Veuillez réessayer plus tard.");
             }); 
         } catch (error) {
-            alert(error.message || "Une erreur s'est produite lors de la connexion.");
+            alert(error.message || "Une erreur s'est produite lors de la création.");
         }
     }
     return (
