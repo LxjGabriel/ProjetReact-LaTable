@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ReservationService } from '../../services/ReservationService';
 import ReservationList from '../../components/ReservationList';
+import ReservationButton from '../../components/ReservationButton';
 
 export default function MyReservations() {
   const [reservations, setReservations] = useState([]);
@@ -48,6 +49,8 @@ export default function MyReservations() {
         reservations={reservations} 
         onDelete={handleDeleteReservation} 
       />
+      <h2>Faire une nouvelle réservation</h2>
+      <ReservationButton />
     </div>
   );
 }

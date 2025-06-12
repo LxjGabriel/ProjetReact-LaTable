@@ -19,6 +19,9 @@ router.get('/auth', authMiddleware, requireRole(Role.ADMIN), AuthController.getA
 router.post('/login', AuthController.login);
 router.post('/signup', AuthController.signup)
 router.get('/user/:id', authMiddleware, requireRole(Role.ADMIN), AuthController.getUserById);
+router.post('/change-password', authMiddleware, requireRole(), AuthController.changePassword);
+router.get('/me', authMiddleware, requireRole(), AuthController.getMe);
+router.put('/update-profile', authMiddleware, requireRole(), AuthController.updateProfile);
 
 // Routes /menu
 router.get('/menu', MenuController.getAllMenus);

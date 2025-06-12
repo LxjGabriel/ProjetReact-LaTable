@@ -1,4 +1,5 @@
 import Logout from "../views/auth/Logout";
+import ChangePassword from "../views/profile/ChangePassword";
 import { axiosInstance } from "./AxiosInstance";
 import localStorageHelper from "./localStorageHelper";
 
@@ -64,6 +65,31 @@ const AuthService = {
       throw new Error('Failed to fetch user');
     }
     return response.data;
+  },
+
+  GetMe: async () => {
+    const response = await axiosInstance.get(`/me`);
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch user data');
+    }
+    return response.data;
+  },
+
+  ChangePassword: async (currentPassword, newPassword, confirmNewPassword) => {
+    const response = await axiosInstance.post(`/change-password`, {
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+      confirmNewPassword: confirmNewPassword,
+    });
+  },
+
+  UpdateProfile: async (email, fname, lname, phone) => {
+    const response = await axiosInstance.put(`/update-profile`, {
+      email: email,
+      fname: fname,
+      lname: lname,
+      phone: phone,
+    });
   },
 };
 

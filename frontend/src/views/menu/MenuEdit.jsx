@@ -35,7 +35,7 @@ export default function MenuEdit() {
                     });
                 } catch (error) {
                     if (error.status === 404) {
-                        ToastService.danger("Menu non trouvé. Veuillez vérifier l'ID.");
+                        ToastService.danger("Produit non trouvé. Veuillez vérifier l'ID.");
                         nav("/menu");
                     }
                 } finally {
@@ -59,18 +59,18 @@ export default function MenuEdit() {
                 id,
                 formData
             ).then(() => {
-                ToastService.success("Menu modifié avec succès !");
+                ToastService.success("Produit modifié avec succès !");
                 nav("/menu");
             }).catch((error) => {
-                ToastService.danger("Une erreur s'est produite lors de la modification du menu. Veuillez réessayer plus tard.");
-            }); 
+                ToastService.danger("Une erreur s'est produite lors de la modification du produit. Veuillez réessayer plus tard.");
+            });
         } catch (error) {
             alert(error.message || "Une erreur s'est produite lors de la connexion.");
         }
     }
     return (
         <div className="container">
-            <h1>Modifier le menu</h1>
+            <h1>Modifier le produit</h1>
             <form>
                 <InputComponent label="Nom" id="name" required value={formData.name} onChange={handleChange} />
                 <InputComponent label="Description" id="description" required value={formData.description} onChange={handleChange} />
