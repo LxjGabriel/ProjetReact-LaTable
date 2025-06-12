@@ -1,0 +1,83 @@
+.reservation-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.reservation-list-container {
+  margin-bottom: 20px;
+}
+
+.no-reservations {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 40px 20px;
+}
+
+/* Pagination */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 16px;
+}
+
+.pagination-button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.pagination-button:not(:disabled) {
+  background-color: #f8f9fa;
+  color:#454545;
+  border-color: #007bff;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  color:#6c757d;
+  border-color: #007bff;
+}
+
+.pagination-button:disabled {
+  background-color: #d9d7d7;
+  cursor: not-allowed;
+  color: #6c757d;
+}
+
+.pagination-button.active {
+  background-color: #007bff;
+  color: rgb(170, 180, 230);
+  border-color: #007bff;
+}
+
+.pagination-button.active:hover {
+  background-color: #0056b3;
+}
+
+.pagination-info {
+  text-align: center;
+  margin-top: 8px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pagination-container {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  
+  .pagination-button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}

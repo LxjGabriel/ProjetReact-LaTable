@@ -10,6 +10,7 @@ export default function NavBarComponent() {
         {' '}
         {AuthService.IsConnected() ? (
           <>
+            <Link to="/my-reservations">Mes réservations</Link> {' '}
             <Link to="/profile">Mon Profil</Link> {' '}
             <Link to="/logout">Se déconnecter</Link> {' '}
           </> 

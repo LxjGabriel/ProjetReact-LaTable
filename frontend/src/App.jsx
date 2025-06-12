@@ -10,6 +10,8 @@ import MenuAdd from './views/menu/MenuAdd'
 import MenuEdit from './views/menu/MenuEdit'
 import ProtectedRoute from "./components/ProtectedRoute";
 import ToastContainer from './components/ToastContainer'
+import MyReservations from './views/reservation/MyReservations'
+
 
 function App() {
 
@@ -26,6 +28,11 @@ function App() {
         <Route path="/menu/create" element={
           <ProtectedRoute requiredRole={1}>
             <MenuAdd />
+          </ProtectedRoute>
+        } />
+        <Route path="/my-reservations" element={
+          <ProtectedRoute requiredRole={0}>
+            <MyReservations />
           </ProtectedRoute>
         } />
         <Route path="/menu/edit/:id" element={
