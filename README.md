@@ -53,6 +53,8 @@ Ce token sera a entré dans Auth de la requête (Bearer Token)
 
 # Repartition des tâches - Frontend
 
+Pour chaque feature, tout les éléments ont été realisé par la personne (routes, appel API, styles composants etc..)
+
 |                                                                                 | Cédric | Tom | Nicolas |
 | ------------------------------------------------------------------------------- | ------ | --- | ------- |
 | Affichage des réservations                                                      |        |     | x       |
@@ -88,3 +90,56 @@ Voici la liste des routes principales de l'application React et leur description
 
 - Les routes protégées nécessitent d'être connecté, certaines nécessitent également le rôle administrateur.
 - Si l'accès n'est pas autorisé, l'utilisateur est redirigé vers la page de connexion ou la page d'accueil selon le cas.
+
+# Schéma des composants et de leur arborescence (Frontend)
+
+```
+App
+│
+├── NavBarComponent
+├── ToastContainer
+└── Routes
+    ├── Home
+    │   └── ReservationButton
+    ├── Login
+    │   └── InputComponent
+    │   └── ButtonComponent
+    ├── Signup
+    │   └── InputComponent
+    │   └── ButtonComponent
+    ├── Logout
+    ├── MenuHome
+    │   ├── MenuCardComponent (pour chaque catégorie)
+    │   │   └── MenuActionsPopover (si admin)
+    │   └── ReservationButton
+    ├── MenuAdd
+    │   ├── InputComponent
+    │   ├── SelectComponent
+    │   └── ButtonComponent
+    ├── MenuEdit
+    │   ├── InputComponent
+    │   ├── SelectComponent
+    │   └── ButtonComponent
+    ├── MyReservations
+    │   ├── ReservationList
+    │   │   ├── ReservationCard (pour chaque réservation)
+    │   └── ReservationButton
+    ├── Reservations (admin)
+    │   ├── ReservationList
+    │   │   ├── ReservationCard (pour chaque réservation)
+    ├── Profile
+    │   └── ButtonComponent
+    ├── ChangePassword
+    │   ├── InputComponent
+    │   └── ButtonComponent
+    ├── EditProfile
+    │   ├── InputComponent
+    │   └── ButtonComponent
+    └── NewReservation
+        ├── InputComponent
+        └── ButtonComponent
+```
+
+- **NavBarComponent** et **ToastContainer** sont présents sur toutes les pages.
+- Les composants de formulaire (`InputComponent`, `SelectComponent`, `ButtonComponent`) sont réutilisés dans plusieurs vues.
+- Les routes protégées utilisent le composant `ProtectedRoute` pour la gestion de l’authentification et des rôles.
