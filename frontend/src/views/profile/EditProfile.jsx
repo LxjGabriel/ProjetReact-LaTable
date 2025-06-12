@@ -12,7 +12,7 @@ export default function EditProfile() {
         nom: '',
         phone: ''
     });
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
@@ -37,14 +37,13 @@ export default function EditProfile() {
                    console.error("Erreur lors de la récupération des données utilisateur :", error);
                    ToastService.danger("Impossible de récupérer les données utilisateur. Veuillez réessayer plus tard.");
                    navigate("/profile");
-                } finally {
-                    setLoading(false);
                 }
             };
             fetchMe();
         }, []);
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         try {
             await AuthService.UpdateProfile(
@@ -63,6 +62,8 @@ export default function EditProfile() {
             } else {
                 setError("Une erreur s'est produite lors de la mise à jour du profil. Veuillez réessayer plus tard.");
             }
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -75,7 +76,7 @@ export default function EditProfile() {
                 <InputComponent label="Nom" id="nom" required value={formData.nom} onChange={handleChange} />
                 <InputComponent type="number" label="Téléphone" id="phone" required value={formData.phone} onChange={handleChange} />
                 {error && <div className="alert alert-danger">{error}</div>}
-                <ButtonComponent label="Modifier le profile" onClick={handleSubmit} />
+                <ButtonComponent label="Modifier le profile" onClick={handleSubmit} isloading={loading} />
             </form>
         </div>
     );

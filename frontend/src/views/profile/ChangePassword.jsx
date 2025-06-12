@@ -11,6 +11,7 @@ export default function ChangePassword() {
         newPassword: '',
         confirmNewPassword: ''
     });
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ export default function ChangePassword() {
     };
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         try {
             await AuthService.ChangePassword(
@@ -39,6 +41,8 @@ export default function ChangePassword() {
             } else {
                 setError("Une erreur est survenue. Veuillez réessayer.");
             }
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -50,7 +54,7 @@ export default function ChangePassword() {
                 <InputComponent label="Nouveau mot de passe" id="newPassword" type="password" required value={formData.newPassword} onChange={handleChange} />
                 <InputComponent label="Confirmer le nouveau mot de passe" id="confirmNewPassword" type="password" required value={formData.confirmNewPassword} onChange={handleChange} />
                 {error && <div className="alert alert-danger">{error}</div>}
-                <ButtonComponent label="Changer le mot de passe" onClick={handleSubmit} />
+                <ButtonComponent label="Changer le mot de passe" onClick={handleSubmit} isloading={loading} />
             </form>
         </div>
     );
