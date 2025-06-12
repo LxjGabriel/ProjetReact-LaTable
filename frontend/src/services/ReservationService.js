@@ -14,6 +14,27 @@ export const ReservationService = {
         return await axiosInstance.get(API_URL + '/my', config);
     },
 
+    getAllReservations: async() => {
+        const token = localStorageHelper.getData('token');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        return await axiosInstance.get(API_URL, config);
+    },
+
+    confirmReservation: async(reservationId) => {
+        const token = localStorageHelper.getData('token');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        };
+        return await axiosInstance.put(API_URL + `/${reservationId}/confirm`, {}, config);
+    },
+
     // Méthode pour annuler une réservation
     deleteReservation: async(reservationId) => {
         const token = localStorageHelper.getData('token');
