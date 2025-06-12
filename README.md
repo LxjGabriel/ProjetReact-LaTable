@@ -1,4 +1,5 @@
-# Instalation
+# Application réservation restaurant 
+# Installation
 
 Lancez Docker
 
