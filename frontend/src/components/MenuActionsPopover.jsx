@@ -22,8 +22,7 @@ export default function MenuActionsPopover({ onDelete, onEdit }) {
   return (
     <div className="menu-actions-popover" ref={popoverRef} style={{ position: "relative", display: "inline-block" }}>
       <button
-        className="btn btn-secondary"
-        style={{ fontSize: "1.5em", padding: "0 0.5em", lineHeight: "1" }}
+        style={{ fontSize: "1.5em", lineHeight: "1", padding: "0.2em 0.5em", backgroundColor: "lightgray" }}
         onClick={() => setOpen((v) => !v)}
         aria-label="Actions"
         type="button"

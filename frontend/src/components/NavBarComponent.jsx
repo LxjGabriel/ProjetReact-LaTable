@@ -17,7 +17,7 @@ export default function NavBarComponent() {
             )}
             {' '}
             <Link to="/profile">Mon Profil</Link> {' '}
-            <Link to="/logout">Se déconnecter</Link> {' '}
+            <Link to="/logout"><span style={{ color: "red" }}>Se déconnecter</span></Link> {' '}
           </> 
         ) : (
             <>
