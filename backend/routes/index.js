@@ -18,7 +18,9 @@ const OpeningSlotController = require('../controllers/OpeningSlot');
 router.get('/auth', authMiddleware, requireRole(Role.ADMIN), AuthController.getAllUsers);
 router.post('/login', AuthController.login);
 router.post('/signup', AuthController.signup)
-
+router.post('/change-password', authMiddleware, requireRole(), AuthController.changePassword);
+router.get('/me', authMiddleware, requireRole(), AuthController.getMe);
+router.put('/update-profile', authMiddleware, requireRole(), AuthController.updateProfile);
 
 // Routes /menu
 router.get('/menu', MenuController.getAllMenus);
