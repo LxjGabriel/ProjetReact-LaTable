@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MenuCardComponent from "../../components/menu/MenuCardComponent";
 import { MenuService } from "../../services/MenuService";
 import { AuthService } from "../../services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 export default function MenuHome() {
     const [entree, setEntree] = useState([]);
@@ -9,6 +10,7 @@ export default function MenuHome() {
     const [dessert, setDessert] = useState([]);
     const [boisson, setBoisson] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchMenus = async () => {
@@ -39,7 +41,7 @@ export default function MenuHome() {
                 <>
                     { AuthService.IsConnected() && AuthService.GetUser().role === 1 && (
                         <div className="mb-3">
-                            <a href="/menu/create" className="btn btn-primary">Créer un menu</a>
+                            <button onClick={() => navigate("/menu/create")} className="btn btn-primary">Créer un menu</button>
                         </div>
                     )}
                     <div className="flex">
