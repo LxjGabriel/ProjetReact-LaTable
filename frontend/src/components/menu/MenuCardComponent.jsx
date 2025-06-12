@@ -1,23 +1,27 @@
 import { AuthService } from "../../services/AuthService";
 import { MenuService } from "../../services/MenuService";
 import MenuActionsPopover from "../MenuActionsPopover";
+import { useNavigate } from "react-router-dom";
+import ToastService from "../../services/ToastService";
 
 export default function MenuCardComponent({ title, items = [] }) {
+
+    const nav = useNavigate();
 
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) {
             try {
                 await MenuService.DeleteMenu(id);
+                ToastService.success("Menu supprimé avec succès !");
                 window.location.reload();
             } catch (error) {
-                console.error("Erreur lors de la suppression du menu :", error);
-                alert("Une erreur s'est produite lors de la suppression du menu. Veuillez réessayer plus tard.");
+                ToastService.danger("Une erreur s'est produite lors de la suppression du menu. Veuillez réessayer plus tard.");
             }
         }
     }
 
     const handleUpdate = (id) => {
-        window.location.href = `/menu/edit/${id}`;
+        nav(`/menu/edit/${id}`);
     }
 
     return (

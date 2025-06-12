@@ -9,12 +9,14 @@ import MenuHome from './views/menu/MenuHome'
 import MenuAdd from './views/menu/MenuAdd'
 import MenuEdit from './views/menu/MenuEdit'
 import ProtectedRoute from "./components/ProtectedRoute";
+import ToastContainer from './components/ToastContainer'
 
 function App() {
 
   return (
     <>
       <NavBarComponent />
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

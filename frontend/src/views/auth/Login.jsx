@@ -8,6 +8,7 @@ export default function Signup() {
         email: '',
         password: ''
     });
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         setFormData({
@@ -25,7 +26,12 @@ export default function Signup() {
             );
             window.location.href = "/";
         } catch (error) {
-            alert(error.message || "Une erreur s'est produite lors de la connexion.");
+            if(error.status === 401) {
+                setError("Identifiants incorrects. Veuillez réessayer.");
+            }
+            else{
+                setError("Une erreur s'est produite lors de la connexion. Veuillez réessayer plus tard.");
+            }
         }
     }
 
@@ -35,6 +41,7 @@ export default function Signup() {
             <form>
                 <InputComponent label="Email" id="email" required value={formData.email} onChange={handleChange} />
                 <InputComponent label="Mot de passe" type="password" id="password" required value={formData.password} onChange={handleChange} />
+                {error && <div className="alert alert-danger">{error}</div>}
                 <ButtonComponent label="Se Connecter" onClick={handleSubmit} />
                 <div className="mb-3">
                     <p>Pas encore inscrit ? <a href="/signup">Inscrivez-vous</a></p>
