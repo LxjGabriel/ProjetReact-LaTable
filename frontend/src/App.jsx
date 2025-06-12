@@ -13,6 +13,7 @@ import ToastContainer from './components/ToastContainer'
 import MyReservations from './views/reservation/MyReservations'
 import Profile from './views/profile/Profile'
 import ChangePassword from './views/profile/ChangePassword'
+import EditProfile from './views/profile/EditProfile'
 
 
 function App() {
@@ -50,6 +51,11 @@ function App() {
         <Route path="/change-password" element={
           <ProtectedRoute>
             <ChangePassword />
+          </ProtectedRoute>
+        } />
+        <Route path="/update-profile" element={
+          <ProtectedRoute>
+            <EditProfile />
           </ProtectedRoute>
         } />
       </Routes>
