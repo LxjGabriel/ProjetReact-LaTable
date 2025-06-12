@@ -66,7 +66,7 @@ Pour chaque feature, tout les éléments ont été realisé par la personne (rou
 | Récupérations / création des menus                                              |        | x   |         |
 | Setup Router, Toasts                                                            |        | x   |         |
 | Setup de l'authentification                                                     |        | x   |         |
-| Page profile / chane password / update profile                                  |        | x   |         |
+| Page profile / change password / update profile                                  |        | x   |         |
 
 # Routes Frontend
 
