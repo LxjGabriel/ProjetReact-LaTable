@@ -39,6 +39,11 @@ const AuthService = {
     return token !== null && token !== undefined;
   },
 
+  IsAdmin: () => {
+    const user = localStorageHelper.getData('user');
+    return user && user.role === 1; 
+  },
+
   Logout: () => {
     localStorageHelper.removeData('token');
   },
@@ -46,6 +51,20 @@ const AuthService = {
   GetUser: () => {
     const user = localStorageHelper.getData('user');
     return user ? user : null;
+  },
+
+  GetUserById: async (userId) => {
+    const token = localStorageHelper.getData('token');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axiosInstance.get(`${API_URL}/${userId}`, config);
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch user');
+    }
+    return response.data;
   },
 
   GetMe: async () => {

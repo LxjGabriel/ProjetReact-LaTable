@@ -93,9 +93,16 @@ INSERT INTO tables (seats) VALUES
 
 -- Insertion d'éléments du menu
 INSERT INTO menu_items (name, description, price, category) VALUES
-('Pizza Margherita', 'Tomate, mozzarella, basilic', 1200, 1),
-('Salade César', 'Poulet grillé, laitue, parmesan, croûtons', 900, 2),
-('Tiramisu', 'Dessert italien classique', 700, 3);
+('Salade César', 'Poulet grillé, laitue, parmesan, croûtons', 12, 0),
+('Oeuf Parfait', 'Oeuf avec sauce au vin rouge', 14, 0),
+('Spaghetti Carbonara', 'Pâtes, lardons, œuf, parmesan', 21, 1),
+('Pizza Margherita', 'Tomate, mozzarella, basilic', 16, 1),
+('Tiramisu', 'Dessert italien classique', 8, 2),
+('Crème brûlée', 'Dessert français classique', 7, 2),
+('Café', 'Café noir', 2.50, 3),
+('Thé vert', 'Thé vert japonais', 3, 3),
+('Coca-Cola', 'Boisson gazeuse', 4, 3);
+
 
 -- Insertion de créneaux d'ouverture
 INSERT INTO opening_slots (date_time, duration, available, comment) VALUES

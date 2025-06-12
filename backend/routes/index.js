@@ -18,6 +18,7 @@ const OpeningSlotController = require('../controllers/OpeningSlot');
 router.get('/auth', authMiddleware, requireRole(Role.ADMIN), AuthController.getAllUsers);
 router.post('/login', AuthController.login);
 router.post('/signup', AuthController.signup)
+router.get('/user/:id', authMiddleware, requireRole(Role.ADMIN), AuthController.getUserById);
 router.post('/change-password', authMiddleware, requireRole(), AuthController.changePassword);
 router.get('/me', authMiddleware, requireRole(), AuthController.getMe);
 router.put('/update-profile', authMiddleware, requireRole(), AuthController.updateProfile);
@@ -36,8 +37,9 @@ router.get('/reservation', authMiddleware, requireRole(Role.ADMIN), ReservationC
 router.get('/reservation/my', authMiddleware, requireRole(), ReservationController.getMyReservations);
 router.get('/reservation/:user_id', authMiddleware, requireRole(), ReservationController.getReservationsByUserId);
 router.post('/reservation', authMiddleware, requireRole(), ReservationController.createReservation);
-router.put('/reservation/:id', authMiddleware, requireRole(), ReservationController.updateReservation);
-router.delete('/reservation/:id', authMiddleware, requireRole(), ReservationController.deleteReservation);
+router.put('/reservation/:id', authMiddleware, requireRole(Role.ADMIN), ReservationController.updateReservation);
+router.put('/reservation/:id/confirm', authMiddleware, requireRole(Role.ADMIN), ReservationController.confirmReservation);
+router.delete('/reservation/:id', authMiddleware, ReservationController.deleteReservation);
 
 // Routes /reservation_table
 router.get('/reservation_table', authMiddleware, requireRole(Role.ADMIN) ,ReservationTableController.getAllReservationTables);

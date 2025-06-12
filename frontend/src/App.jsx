@@ -14,6 +14,7 @@ import MyReservations from './views/reservation/MyReservations'
 import Profile from './views/profile/Profile'
 import ChangePassword from './views/profile/ChangePassword'
 import EditProfile from './views/profile/EditProfile'
+import Reservations from './views/reservation/Reservations'
 
 import NewReservation from './views/reservation/NewReservation'
 
@@ -35,8 +36,13 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/my-reservations" element={
-          <ProtectedRoute requiredRole={0}>
+          <ProtectedRoute>
             <MyReservations />
+          </ProtectedRoute>
+        } />
+        <Route path="/reservations" element={
+          <ProtectedRoute requiredRole={1}>
+            <Reservations />
           </ProtectedRoute>
         } />
         <Route path="/menu/edit/:id" element={

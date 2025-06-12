@@ -14,6 +14,27 @@ export const ReservationService = {
         return await axiosInstance.get(API_URL + '/my', config);
     },
 
+    getAllReservations: async() => {
+        const token = localStorageHelper.getData('token');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        return await axiosInstance.get(API_URL, config);
+    },
+
+    confirmReservation: async(reservationId) => {
+        const token = localStorageHelper.getData('token');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        };
+        return await axiosInstance.put(API_URL + `/${reservationId}/confirm`, {}, config);
+    },
+
     MakeReservation: async (user_id, number_of_people, opening_slot_id) => {
     const response = await axiosInstance.post(`${API_URL}`, {
       user_id: user_id,
