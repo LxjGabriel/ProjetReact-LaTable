@@ -11,6 +11,8 @@ import MenuEdit from './views/menu/MenuEdit'
 import ProtectedRoute from "./components/ProtectedRoute";
 import ToastContainer from './components/ToastContainer'
 import MyReservations from './views/reservation/MyReservations'
+import Profile from './views/profile/Profile'
+import ChangePassword from './views/profile/ChangePassword'
 
 
 function App() {
@@ -38,6 +40,16 @@ function App() {
         <Route path="/menu/edit/:id" element={
           <ProtectedRoute requiredRole={1}>
             <MenuEdit />
+          </ProtectedRoute>
+        } />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
+        <Route path="/change-password" element={
+          <ProtectedRoute>
+            <ChangePassword />
           </ProtectedRoute>
         } />
       </Routes>

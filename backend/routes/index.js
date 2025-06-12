@@ -18,6 +18,7 @@ const OpeningSlotController = require('../controllers/OpeningSlot');
 router.get('/auth', authMiddleware, requireRole(Role.ADMIN), AuthController.getAllUsers);
 router.post('/login', AuthController.login);
 router.post('/signup', AuthController.signup)
+router.post('/change-password', authMiddleware, requireRole(), AuthController.changePassword);
 
 
 // Routes /menu

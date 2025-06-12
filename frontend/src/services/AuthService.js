@@ -1,4 +1,5 @@
 import Logout from "../views/auth/Logout";
+import ChangePassword from "../views/profile/ChangePassword";
 import { axiosInstance } from "./AxiosInstance";
 import localStorageHelper from "./localStorageHelper";
 
@@ -46,6 +47,14 @@ const AuthService = {
     const user = localStorageHelper.getData('user');
     return user ? user : null;
   },
+
+  ChangePassword: async (currentPassword, newPassword, confirmNewPassword) => {
+    const response = await axiosInstance.post(`/change-password`, {
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+      confirmNewPassword: confirmNewPassword,
+    });
+  }
 };
 
 export { AuthService };

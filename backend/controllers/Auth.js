@@ -92,6 +92,46 @@ class AuthController{
             res.status(500).json({ error: "Erreur serveur" });
         }
     }
+
+    async changePassword(req, res) {
+        try {
+            const { currentPassword, newPassword, confirmNewPassword } = req.body;
+            const user = req.user;
+
+            // Vérifier si l'utilisateur est authentifié
+            if (!user) {
+                return res.status(401).json({ error: "Utilisateur non authentifié" });
+            }
+
+            // Vérifier si le mot de passe actuel est correct
+            const result = await pool.query(
+                'SELECT hashed_password from users where id = $1', [user.id]
+            );
+            const valid = await bcrypt.compare(currentPassword, result.rows[0].hashed_password);
+            if (!valid) {
+                return res.status(401).json({ error: "Mot de passe actuel incorrect" });
+            }
+
+            // Vérifier si le nouveau mot de passe et la confirmation correspondent
+            if (newPassword !== confirmNewPassword) {
+                return res.status(400).json({ error: "Les nouveaux mots de passe ne correspondent pas" });
+            }
+
+            // Hacher le nouveau mot de passe
+            const hash = await bcrypt.hash(newPassword, 10);
+
+            // Mettre à jour le mot de passe dans la base de données
+            await pool.query(
+                'UPDATE users SET hashed_password = $1 WHERE id = $2',
+                [hash, user.id]
+            );
+
+            res.status(200).json({ message: "Mot de passe changé avec succès" });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Erreur serveur" });
+        }
+    }
 }
 
 module.exports = new AuthController();
