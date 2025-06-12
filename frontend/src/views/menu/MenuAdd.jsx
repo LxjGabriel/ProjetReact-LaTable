@@ -30,19 +30,19 @@ export default function MenuAdd() {
            MenuService.CreateMenu(
                 formData
             ).then(() => {
-                ToastService.success("Menu créé avec succès !");
+                ToastService.success("Produit créé avec succès !");
                 nav("/menu");
             }).catch((error) => {
-                console.error("Erreur lors de la création du menu :", error);
-                ToastService.danger("Une erreur s'est produite lors de la création du menu. Veuillez réessayer plus tard.");
-            }); 
+                console.error("Erreur lors de la création du produit :", error);
+                ToastService.danger("Une erreur s'est produite lors de la création du produit. Veuillez réessayer plus tard.");
+            });
         } catch (error) {
             alert(error.message || "Une erreur s'est produite lors de la création.");
         }
     }
     return (
         <div className="container">
-            <h1>Créer un menu</h1>
+            <h1>Ajouter un produit à la carte</h1>
             <form>
                 <InputComponent label="Nom" id="name" required value={formData.name} onChange={handleChange} />
                 <InputComponent label="Description" id="description" required value={formData.description} onChange={handleChange} />

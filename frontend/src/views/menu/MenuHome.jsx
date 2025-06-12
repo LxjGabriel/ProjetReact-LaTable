@@ -42,7 +42,7 @@ export default function MenuHome() {
                 <>
                     { AuthService.IsConnected() && AuthService.GetUser().role === 1 && (
                         <div className="mb-3">
-                            <button onClick={() => navigate("/menu/create")} className="btn btn-primary">Créer un menu</button>
+                            <button onClick={() => navigate("/menu/create")} className="btn btn-primary">Ajouter un produit à la carte</button>
                         </div>
                     )}
                     <div className="flex">
