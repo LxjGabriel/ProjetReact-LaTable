@@ -113,7 +113,7 @@ export default function Reservations() {
                 type="date" 
                 value={dateFrom}
                 onChange={(e) => setDateFrom(e.target.value)}
-                style={{width: '100%', padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px', fontSize: '14px'}}
+                style={{padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px', fontSize: '14px'}}
             />
         </div>
         <div style={{minWidth: '150px'}}>
@@ -122,7 +122,7 @@ export default function Reservations() {
                 type="date" 
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
-                style={{width: '100%', padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px', fontSize: '14px'}}
+                style={{padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px', fontSize: '14px'}}
             />
         </div>
         <div style={{minWidth: '150px'}}>
@@ -130,7 +130,7 @@ export default function Reservations() {
             <select 
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                style={{width: '100%', padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px', fontSize: '14px', backgroundColor: 'white'}}
+                style={{padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px', fontSize: '14px', backgroundColor: 'white'}}
             >
                 <option value="all">Tous les statuts</option>
                 <option value="0">En attente</option>

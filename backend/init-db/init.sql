@@ -115,8 +115,8 @@ INSERT INTO opening_slots (date_time, duration, available, comment) VALUES
 
 -- Insertion de réservations
 INSERT INTO reservations (user_id, number_of_people, date, time, status, opening_slot_id) VALUES
-(2, 4, '2025-05-13', '19:00:00', 1, 2),
-(2, 2, '2025-05-14', '12:00:00', 0, 1);
+(2, 4, '2025-06-13', '19:00:00', 1, 2),
+(2, 2, '2025-06-14', '12:00:00', 0, 1);
 
 -- Lien entre réservation et tables
 INSERT INTO reservation_tables (reservation_id, table_id) VALUES
