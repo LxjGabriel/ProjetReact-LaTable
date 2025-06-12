@@ -6,6 +6,7 @@ export default function NavBarComponent() {
   return (
     <nav>
         <Link to="/">Accueil</Link>
+        <Link to="/menu">Menu</Link> {' '}
         {' '}
         {AuthService.IsConnected() ? (
           <>

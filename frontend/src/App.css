@@ -1,5 +1,4 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -43,7 +42,7 @@
 
 /* Container général pour les pages et formulaires */
 .container {
-  max-width: 500px;
+  max-width: 1900px;
   margin: 2rem auto;
   background: #fff;
   border-radius: 12px;
@@ -83,6 +82,46 @@
   background-color: #535bf2;
   border-color: #535bf2;
   color: #fff;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+  background-color: #b52a37;
+  border-color: #b52a37;
+  color: #fff;
+}
+
+.btn-warn {
+  background-color: #ffc107;
+  color: #212529;
+  border-color: #ffc107;
+}
+
+.btn-warn:hover,
+.btn-warn:focus {
+  background-color: #e0a800;
+  border-color: #e0a800;
+  color: #212529;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #565e64;
+  border-color: #565e64;
+  color: #fff;
+  outline: none;
 }
 
 /* Labels de formulaire */
@@ -145,6 +184,56 @@ h1 {
   font-size: 2.2em;
   margin-bottom: 1rem;
   color: #213547;
+}
+
+/* Toast notifications */
+.toast {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  min-width: 220px;
+  padding: 1em 1.5em;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1em;
+  z-index: 9999;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  opacity: 0.97;
+  animation: toast-in 0.3s;
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-20px);}
+  to { opacity: 0.97; transform: translateY(0);}
+}
+.toast-success {
+  background: #28a745;
+}
+.toast-danger {
+  background: #dc3545;
+}
+.toast-warn {
+  background: #ffc107;
+  color: #212529;
+  border: 1px solid #ffc107;
+}
+
+/* Alerts */
+.alert {
+  padding: 1em 1.2em;
+  margin-bottom: 1.2em;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 500;
+  border: 1px solid transparent;
+  background: #f8d7da;
+  color: #842029;
+}
+
+.alert-danger {
+  background: #f8d7da;
+  color: #842029;
+  border-color: #f5c2c7;
 }
 
 /* Responsive */
