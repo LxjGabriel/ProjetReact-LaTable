@@ -234,15 +234,35 @@ class ReservationController {
             return res.status(400).json({ error: "ID de réservation requis" });
         }
         
+        const client = await db.connect();
         try {
-            const result = await Reservation.delete(id);
-            if (result.affectedRows === 0) {
+            await client.query('BEGIN');
+            
+            // Supprimer d'abord les associations de tables
+            await client.query(
+                'DELETE FROM reservation_tables WHERE reservation_id = $1',
+                [id]
+            );
+            
+            // Ensuite supprimer la réservation
+            const result = await client.query(
+                'DELETE FROM reservations WHERE id = $1',
+                [id]
+            );
+            
+            if (result.rowCount === 0) {
+                await client.query('ROLLBACK');
                 return res.status(404).json({ error: "Reservation non trouvée" });
             }
-            res.status(200).json({ message: 'Reservation supprimée' });
+            
+            await client.query('COMMIT');
+            res.status(200).json({ message: 'Reservation supprimée avec succès' });
         } catch (err) {
+            await client.query('ROLLBACK');
             console.error(err.message);
             res.status(500).json({ error: "Erreur serveur" });
+        } finally {
+            client.release();
         }
     }
 }

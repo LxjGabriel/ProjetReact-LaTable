@@ -5,6 +5,8 @@ import Signup from './views/auth/Signup'
 import Login from './views/auth/Login'
 import Home from './views/Home'
 import Logout from './views/auth/Logout'
+import MyReservations from './views/reservation/MyReservations'
+
 
 function App() {
 
@@ -16,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/my-reservations" element={<MyReservations />} />
       </Routes>
     </>
   )
