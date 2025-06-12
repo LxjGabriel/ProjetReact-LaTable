@@ -22,6 +22,7 @@ docker-compose up -d
 ```
 
 L'API devrait se lancer [Ici](http://localhost:3000)
+L'Application React [Ici](http://localhost:3001)
 
 # Connexion :
 
