@@ -3,6 +3,7 @@ import MenuCardComponent from "../../components/menu/MenuCardComponent";
 import { MenuService } from "../../services/MenuService";
 import { AuthService } from "../../services/AuthService";
 import { useNavigate } from "react-router-dom";
+import ReservationButton from "../../components/ReservationButton";
 
 export default function MenuHome() {
     const [entree, setEntree] = useState([]);
@@ -60,6 +61,7 @@ export default function MenuHome() {
                     </div>
                 </>
             )}
+            <ReservationButton />
         </div>
     );
 }

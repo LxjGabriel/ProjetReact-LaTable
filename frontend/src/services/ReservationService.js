@@ -14,6 +14,17 @@ export const ReservationService = {
         return await axiosInstance.get(API_URL + '/my', config);
     },
 
+    MakeReservation: async (user_id, number_of_people, opening_slot_id) => {
+    const response = await axiosInstance.post(`${API_URL}`, {
+      user_id: user_id,
+      number_of_people: number_of_people,
+      opening_slot_id: opening_slot_id,
+    });
+    if(response.status == 404){
+      throw new Error('Error in submitting');
+    }
+  },
+
     // Méthode pour annuler une réservation
     deleteReservation: async(reservationId) => {
         const token = localStorageHelper.getData('token');

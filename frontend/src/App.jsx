@@ -15,6 +15,7 @@ import Profile from './views/profile/Profile'
 import ChangePassword from './views/profile/ChangePassword'
 import EditProfile from './views/profile/EditProfile'
 
+import NewReservation from './views/reservation/NewReservation'
 
 function App() {
 
@@ -58,6 +59,8 @@ function App() {
             <EditProfile />
           </ProtectedRoute>
         } />
+        
+        <Route path="/reservations/new" element={<NewReservation/>}  />
       </Routes>
     </>
   )
