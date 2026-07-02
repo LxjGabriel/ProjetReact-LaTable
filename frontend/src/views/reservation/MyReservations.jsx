@@ -14,43 +14,46 @@ export default function MyReservations() {
         const response = await ReservationService.getMyReservations();
         setReservations(response.data || []);
       } catch (err) {
-        setError('Erreur lors du chargement des réservations');
+        setError('Impossible de charger vos réservations.');
       } finally {
         setLoading(false);
       }
     };
-
     fetchReservations();
   }, []);
 
   const handleDeleteReservation = async (reservationId) => {
-    if (!window.confirm('Êtes-vous sûr de vouloir annuler cette réservation ?')) {
-      return;
-    }
-
+    if (!window.confirm('Annuler cette réservation ?')) return;
     try {
       await ReservationService.deleteReservation(reservationId);
-      setReservations(prev =>
-        prev.filter(reservation => reservation.id !== reservationId)
-      );
+      setReservations(prev => prev.filter(r => r.id !== reservationId));
       alert('Réservation annulée avec succès');
     } catch (err) {
       alert('Erreur lors de la suppression');
     }
   };
 
-  if (loading) return <div className='container'><p>Chargement...</p></div>;
-  if (error) return <div className='container'><p style={{color: 'red'}}>{error}</p></div>;
+  if (loading) return <div className="container"><p className="loading-state">Chargement...</p></div>;
+  if (error) return <div className="container"><p style={{ color: 'var(--color-danger)' }}>{error}</p></div>;
 
   return (
-    <div className='container'>
-      <h1>Mes Réservations</h1>
-      <ReservationList 
-        reservations={reservations} 
-        onDelete={handleDeleteReservation} 
+    <div className="container">
+      <div className="page-header">
+        <div>
+          <h1 className="page-title">Mes réservations</h1>
+          <p className="page-subtitle">{reservations.length} réservation(s) enregistrée(s)</p>
+        </div>
+      </div>
+
+      <ReservationList
+        reservations={reservations}
+        onDelete={handleDeleteReservation}
       />
-      <h2>Faire une nouvelle réservation</h2>
-      <ReservationButton />
+
+      <div className="my-res-new-section">
+        <h2 className="my-res-new-title">Faire une nouvelle réservation</h2>
+        <ReservationButton />
+      </div>
     </div>
   );
 }

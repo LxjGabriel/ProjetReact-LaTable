@@ -1,25 +1,16 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { AuthService } from "../services/AuthService";
 
-export default function ReservationButton({ 
-    className = "btn btn-success", 
-    text = "Faire une réservation",
-    showOnlyForClients = false 
+export default function ReservationButton({
+    text = "Réserver une table"
 }) {
-    
-    // Vérifier si l'utilisateur est connecté
-    // if (!AuthService.IsConnected()) {
-    //     return null;
-    // }
-
     if (!AuthService.IsConnected()) {
         return (
-            <div className="mb-3">
-                <Link to="/login" className={className}>
+            <div className="res-btn-wrapper">
+                <Link to="/login" className="btn btn-primary">
                     {text}
                 </Link>
-                <p className="text-muted">* Veuillez vous connecter pour faire une réservation.</p>
+                <p className="res-login-note">Connectez-vous pour effectuer une réservation.</p>
             </div>
         );
     }
@@ -28,14 +19,9 @@ export default function ReservationButton({
         return null;
     }
 
-    // Si on veut afficher seulement pour les clients (non-admins)
-    if (showOnlyForClients && AuthService.GetUser().role === 1) {
-        return null;
-    }
-
     return (
-        <div className="mb-3">
-            <Link to="/reservations/new" className={className}>
+        <div className="res-btn-wrapper">
+            <Link to="/reservations/new" className="btn btn-primary">
                 {text}
             </Link>
         </div>

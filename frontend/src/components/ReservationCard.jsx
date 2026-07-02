@@ -1,55 +1,52 @@
-import React from 'react';
 import './../styles/ReservationCard.css';
 
+const STATUS_TEXT = { 0: 'En attente', 1: 'Confirmée', 2: 'Annulée' };
+const STATUS_CLASS = { 0: 'pending', 1: 'confirmed', 2: 'cancelled' };
+
 export default function ReservationCard({ reservation, onDelete }) {
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('fr-FR');
-  };
+  const formatDate = (dateString) =>
+    new Date(dateString).toLocaleDateString('fr-FR');
 
   const formatTime = (timeString) => {
     if (!timeString) return '';
-    return timeString.includes('T') 
+    return timeString.includes('T')
       ? new Date(timeString).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
       : timeString.slice(0, 5);
   };
 
-  const getStatusText = (status) => {
-    const statuses = { 0: 'En attente', 1: 'Confirmée', 2: 'Annulée' };
-    return statuses[status] || 'Inconnu';
-  };
-
-  const getStatusColor = (status) => {
-    const colors = { 0: '#ffa500', 1: '#28a745', 2: '#dc3545' };
-    return colors[status] || '#6c757d';
-  };
-
   return (
-    <div className="reservation-card">
-      <div className="reservation-card-header">
-        <h3 className="reservation-card-title">
-          Réservation #{reservation.id}
-        </h3>
-        <span 
-          className="reservation-card-status"
-          style={{ backgroundColor: getStatusColor(reservation.status) }}
-        >
-          {getStatusText(reservation.status)}
+    <div className="res-card">
+      <div className="res-card-header">
+        <span className="res-card-id">Réservation #{reservation.id}</span>
+        <span className={`badge badge-${STATUS_CLASS[reservation.status] || 'pending'}`}>
+          {STATUS_TEXT[reservation.status] || 'Inconnu'}
         </span>
       </div>
-      
-      <div className="reservation-card-body">
-        <p><strong>Date:</strong> {formatDate(reservation.date)}</p>
-        <p><strong>Heure:</strong> {formatTime(reservation.time)}</p>
-        <p><strong>Personnes:</strong> {reservation.number_of_people}</p>
+
+      <div className="res-card-body">
+        <div className="res-card-row">
+          <span className="res-card-label">Date</span>
+          <span className="res-card-value">{formatDate(reservation.date)}</span>
+        </div>
+        <div className="res-card-row">
+          <span className="res-card-label">Heure</span>
+          <span className="res-card-value">{formatTime(reservation.time)}</span>
+        </div>
+        <div className="res-card-row">
+          <span className="res-card-label">Personnes</span>
+          <span className="res-card-value">{reservation.number_of_people}</span>
+        </div>
       </div>
-      
+
       {reservation.status !== 2 && onDelete && (
-        <button 
-          className="cancel-button"
-          onClick={() => onDelete(reservation.id)}
-        >
-          Annuler
-        </button>
+        <div className="res-card-footer">
+          <button
+            className="btn btn-danger"
+            onClick={() => onDelete(reservation.id)}
+          >
+            Annuler la réservation
+          </button>
+        </div>
       )}
     </div>
   );

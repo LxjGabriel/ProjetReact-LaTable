@@ -1,69 +1,56 @@
-.reservation-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 8px 0;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-  text-align: start;
-  max-width: 300px;
+.res-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: box-shadow 0.15s ease;
 }
 
-.reservation-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+.res-card:hover {
+  box-shadow: var(--shadow-md);
 }
 
-.reservation-card-header {
+.res-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
 }
 
-.reservation-card-title {
-  margin: 0;
-  color: #333;
-  font-size: 1.1rem;
+.res-card-id {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--color-text);
 }
 
-.reservation-card-status {
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
+.res-card-body {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.res-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.res-card-label {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.res-card-value {
   font-weight: 500;
+  color: var(--color-text);
 }
 
-.reservation-card-body {
-  margin-bottom: 16px;
-}
-
-.reservation-card-body p {
-  margin: 8px 0;
-  color: #555;
-}
-
-.reservation-card-body strong {
-  color: #333;
-}
-
-.cancel-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
-}
-
-.cancel-button:hover {
-  background-color: #c82333;
-}
-
-.cancel-button:active {
-  transform: translateY(1px);
+.res-card-footer {
+  padding: 0.875rem 1.25rem;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
 }

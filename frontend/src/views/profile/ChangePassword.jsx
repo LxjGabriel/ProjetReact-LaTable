@@ -16,25 +16,22 @@ export default function ChangePassword() {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.id]: e.target.value
-        });
+        setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
-        setLoading(true);
         e.preventDefault();
+        setLoading(true);
         try {
             await AuthService.ChangePassword(
                 formData.currentPassword,
                 formData.newPassword,
                 formData.confirmNewPassword
             );
-            ToastService.success("Mot de passe changé avec succès.");
+            ToastService.success("Mot de passe modifié avec succès.");
             navigate("/profile");
         } catch (error) {
-            if(error.status === 401) {
+            if (error.status === 401) {
                 setError("Mot de passe actuel incorrect. Veuillez réessayer.");
             } else if (error.status === 400) {
                 setError("Les nouveaux mots de passe ne correspondent pas.");
@@ -44,18 +41,24 @@ export default function ChangePassword() {
         } finally {
             setLoading(false);
         }
-    }
+    };
 
     return (
         <div className="container">
-            <h1>Changement de mot de passe</h1>
-            <form>
-                <InputComponent label="Mot de passe actuel" id="currentPassword" type="password" required value={formData.currentPassword} onChange={handleChange} />
-                <InputComponent label="Nouveau mot de passe" id="newPassword" type="password" required value={formData.newPassword} onChange={handleChange} />
-                <InputComponent label="Confirmer le nouveau mot de passe" id="confirmNewPassword" type="password" required value={formData.confirmNewPassword} onChange={handleChange} />
-                {error && <div className="alert alert-danger">{error}</div>}
-                <ButtonComponent label="Changer le mot de passe" onClick={handleSubmit} isloading={loading} />
-            </form>
+            <div className="page-header">
+                <h1 className="page-title">Changer le mot de passe</h1>
+            </div>
+            <div className="form-page">
+                <div className="form-section">
+                    <form onSubmit={handleSubmit}>
+                        <InputComponent label="Mot de passe actuel" id="currentPassword" type="password" required value={formData.currentPassword} onChange={handleChange} />
+                        <InputComponent label="Nouveau mot de passe" id="newPassword" type="password" required value={formData.newPassword} onChange={handleChange} />
+                        <InputComponent label="Confirmer le nouveau mot de passe" id="confirmNewPassword" type="password" required value={formData.confirmNewPassword} onChange={handleChange} />
+                        {error && <div className="alert alert-danger">{error}</div>}
+                        <ButtonComponent label="Modifier le mot de passe" onClick={handleSubmit} isloading={loading} />
+                    </form>
+                </div>
+            </div>
         </div>
     );
 }

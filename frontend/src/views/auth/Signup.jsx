@@ -41,23 +41,28 @@ export default function Signup() {
                 setError("Une erreur s'est produite lors de l'inscription. Veuillez réessayer plus tard.");
             }
         }
-    }
+    };
 
     return (
-        <div className="container">
-            <h1>Inscription</h1>
-            <form>
-                <InputComponent label="Email" id="email" required value={formData.email} onChange={handleChange} />
-                <InputComponent label="Mot de passe" type="password" id="password" required value={formData.password} onChange={handleChange} />
-                <InputComponent label="Prénom" id="prenom" required value={formData.prenom} onChange={handleChange} />
-                <InputComponent label="Nom" id="nom" required value={formData.nom} onChange={handleChange} />
-                <InputComponent type="number" label="Téléphone" id="phone" required value={formData.phone} onChange={handleChange} />
-                {error && <div className="alert alert-danger">{error}</div>}
-                <ButtonComponent label="S'inscrire" onClick={handleSubmit} />
-                <div className="mb-3">
-                    <p>Déjà inscrit ? <a href="/login">Connectez-vous</a></p>
+        <div className="auth-page">
+            <div className="auth-card">
+                <h1 className="auth-title">Créer un compte</h1>
+                <p className="auth-subtitle">Rejoignez-nous pour réserver votre table</p>
+
+                <form onSubmit={handleSubmit}>
+                    <InputComponent label="Email" id="email" required value={formData.email} onChange={handleChange} />
+                    <InputComponent label="Mot de passe" type="password" id="password" required value={formData.password} onChange={handleChange} />
+                    <InputComponent label="Prénom" id="prenom" required value={formData.prenom} onChange={handleChange} />
+                    <InputComponent label="Nom" id="nom" required value={formData.nom} onChange={handleChange} />
+                    <InputComponent type="number" label="Téléphone" id="phone" required value={formData.phone} onChange={handleChange} />
+                    {error && <div className="alert alert-danger">{error}</div>}
+                    <ButtonComponent label="Créer mon compte" onClick={handleSubmit} />
+                </form>
+
+                <div className="auth-footer">
+                    Déjà inscrit ? <a href="/login">Connectez-vous</a>
                 </div>
-            </form>
+            </div>
         </div>
     );
 }

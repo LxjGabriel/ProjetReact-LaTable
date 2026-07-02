@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MenuCardComponent from "../../components/menu/MenuCardComponent";
 import { MenuService } from "../../services/MenuService";
 import { AuthService } from "../../services/AuthService";
@@ -12,18 +12,21 @@ export default function MenuHome() {
     const [boisson, setBoisson] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const isAdmin = AuthService.IsConnected() && AuthService.GetUser().role === 1;
 
     useEffect(() => {
         const fetchMenus = async () => {
             try {
-                const entree = await MenuService.GetAllMenuByCategory(0);
-                const plat = await MenuService.GetAllMenuByCategory(1);
-                const dessert = await MenuService.GetAllMenuByCategory(2);
-                const boisson = await MenuService.GetAllMenuByCategory(3);
-                setEntree(entree);
-                setPlat(plat);
-                setDessert(dessert);
-                setBoisson(boisson);
+                const [e, p, d, b] = await Promise.all([
+                    MenuService.GetAllMenuByCategory(0),
+                    MenuService.GetAllMenuByCategory(1),
+                    MenuService.GetAllMenuByCategory(2),
+                    MenuService.GetAllMenuByCategory(3),
+                ]);
+                setEntree(e);
+                setPlat(p);
+                setDessert(d);
+                setBoisson(b);
             } catch (err) {
                 console.error("Erreur lors de la récupération des menus :", err);
             } finally {
@@ -35,33 +38,34 @@ export default function MenuHome() {
 
     return (
         <div className="container">
-            <h1>Tous nos menus</h1>
+            <div className="page-header">
+                <div>
+                    <h1 className="page-title">Notre carte</h1>
+                    <p className="page-subtitle">Découvrez nos plats préparés avec des produits frais de saison</p>
+                </div>
+                {isAdmin && (
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => navigate("/menu/create")}
+                    >
+                        Ajouter un produit
+                    </button>
+                )}
+            </div>
+
             {loading ? (
-                <div className="mb-3">Chargement...</div>
+                <p className="loading-state">Chargement de la carte...</p>
             ) : (
                 <>
-                    { AuthService.IsConnected() && AuthService.GetUser().role === 1 && (
-                        <div className="mb-3">
-                            <button onClick={() => navigate("/menu/create")} className="btn btn-primary">Ajouter un produit à la carte</button>
-                        </div>
-                    )}
-                    <div className="flex">
-                        <div className="col-md-4">
-                            <MenuCardComponent title="Entrée" items={entree} />
-                        </div>
-                        <div className="col-md-4">
-                            <MenuCardComponent title="Plats" items={plat} />
-                        </div>
-                        <div className="col-md-4">
-                            <MenuCardComponent title="Desserts" items={dessert} />
-                        </div>
-                        <div className="col-md-4">
-                            <MenuCardComponent title="Boissons" items={boisson} />
-                        </div>
+                    <div className="menu-grid">
+                        <MenuCardComponent title="Entrées" items={entree} />
+                        <MenuCardComponent title="Plats" items={plat} />
+                        <MenuCardComponent title="Desserts" items={dessert} />
+                        <MenuCardComponent title="Boissons" items={boisson} />
                     </div>
+                    <ReservationButton />
                 </>
             )}
-            <ReservationButton />
         </div>
     );
 }

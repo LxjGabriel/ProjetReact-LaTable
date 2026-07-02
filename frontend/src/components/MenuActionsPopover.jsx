@@ -4,7 +4,6 @@ export default function MenuActionsPopover({ onDelete, onEdit }) {
   const [open, setOpen] = useState(false);
   const popoverRef = useRef();
 
-  // Ferme le popover si on clique en dehors
   useEffect(() => {
     function handleClickOutside(event) {
       if (popoverRef.current && !popoverRef.current.contains(event.target)) {
@@ -20,46 +19,92 @@ export default function MenuActionsPopover({ onDelete, onEdit }) {
   }, [open]);
 
   return (
-    <div className="menu-actions-popover" ref={popoverRef} style={{ position: "relative", display: "inline-block" }}>
+    <div ref={popoverRef} style={{ position: "relative", display: "inline-block" }}>
       <button
-        style={{ fontSize: "1.5em", lineHeight: "1", padding: "0.2em 0.5em", backgroundColor: "lightgray" }}
+        type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label="Actions"
-        type="button"
+        style={{
+          width: "28px",
+          height: "28px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "transparent",
+          border: "1px solid var(--color-border)",
+          borderRadius: "var(--radius-sm)",
+          cursor: "pointer",
+          color: "var(--color-text-muted)",
+          fontSize: "1rem",
+          lineHeight: "1",
+          transition: "background 0.15s, border-color 0.15s",
+          padding: 0,
+        }}
+        onMouseOver={e => { e.currentTarget.style.background = "var(--color-bg)"; e.currentTarget.style.borderColor = "var(--color-border-hover)"; }}
+        onMouseOut={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "var(--color-border)"; }}
       >
         &#8942;
       </button>
+
       {open && (
         <div
-          className="popover-menu"
           style={{
             position: "absolute",
             right: 0,
-            top: "2.2em",
-            background: "#fff",
-            border: "1px solid #ececec",
-            borderRadius: "8px",
-            boxShadow: "0 2px 8px rgba(100,108,255,0.07)",
-            zIndex: 100,
-            minWidth: "120px",
-            padding: "0.5em 0"
+            top: "calc(100% + 6px)",
+            background: "var(--color-surface)",
+            border: "1px solid var(--color-border)",
+            borderRadius: "var(--radius-md)",
+            boxShadow: "var(--shadow-lg)",
+            zIndex: 200,
+            minWidth: "130px",
+            padding: "0.375rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.25rem",
           }}
         >
           <button
-            className="btn btn-danger"
-            style={{ width: "100%", marginBottom: "0.5em" }}
-            onClick={onDelete}
             type="button"
-          >
-            Supprimer
-          </button>
-          <button
-            className="btn btn-warn"
-            style={{ width: "100%" }}
-            onClick={onEdit}
-            type="button"
+            onClick={() => { onEdit(); setOpen(false); }}
+            style={{
+              width: "100%",
+              padding: "0.5rem 0.75rem",
+              textAlign: "left",
+              background: "transparent",
+              border: "none",
+              borderRadius: "var(--radius-sm)",
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              color: "var(--color-text)",
+              cursor: "pointer",
+              transition: "background 0.1s",
+            }}
+            onMouseOver={e => e.currentTarget.style.background = "var(--color-bg)"}
+            onMouseOut={e => e.currentTarget.style.background = "transparent"}
           >
             Modifier
+          </button>
+          <button
+            type="button"
+            onClick={() => { onDelete(); setOpen(false); }}
+            style={{
+              width: "100%",
+              padding: "0.5rem 0.75rem",
+              textAlign: "left",
+              background: "transparent",
+              border: "none",
+              borderRadius: "var(--radius-sm)",
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              color: "var(--color-danger)",
+              cursor: "pointer",
+              transition: "background 0.1s",
+            }}
+            onMouseOver={e => e.currentTarget.style.background = "var(--color-danger-bg)"}
+            onMouseOut={e => e.currentTarget.style.background = "transparent"}
+          >
+            Supprimer
           </button>
         </div>
       )}

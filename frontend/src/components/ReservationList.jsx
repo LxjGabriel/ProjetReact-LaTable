@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReservationCard from './ReservationCard';
 import './../styles/ReservationList.css';
 
@@ -8,26 +8,19 @@ export default function ReservationList({ reservations, onDelete }) {
 
   if (!reservations || reservations.length === 0) {
     return (
-      <div className="reservation-list">
-        <p className="no-reservations">Aucune réservation trouvée</p>
+      <div className="res-list">
+        <p className="res-list-empty">Aucune réservation trouvée</p>
       </div>
     );
   }
 
-  // Calcul pagination
   const totalPages = Math.ceil(reservations.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentReservations = reservations.slice(startIndex, endIndex);
-
-  const goToPage = (page) => {
-    setCurrentPage(page);
-  };
+  const currentReservations = reservations.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="reservation-list">
-      {/* Liste des réservations */}
-      <div className="reservation-list-container">
+    <div>
+      <div className="res-list">
         {currentReservations.map((reservation) => (
           <ReservationCard
             key={reservation.id}
@@ -37,12 +30,11 @@ export default function ReservationList({ reservations, onDelete }) {
         ))}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
-        <div className="pagination-container">
+        <div className="pagination">
           <button
-            className="pagination-button"
-            onClick={() => goToPage(currentPage - 1)}
+            className="pagination-btn"
+            onClick={() => setCurrentPage(p => p - 1)}
             disabled={currentPage === 1}
           >
             Précédent
@@ -51,16 +43,16 @@ export default function ReservationList({ reservations, onDelete }) {
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
-              className={`pagination-button ${currentPage === page ? 'active' : ''}`}
-              onClick={() => goToPage(page)}
+              className={`pagination-btn ${currentPage === page ? 'active' : ''}`}
+              onClick={() => setCurrentPage(page)}
             >
               {page}
             </button>
           ))}
 
           <button
-            className="pagination-button"
-            onClick={() => goToPage(currentPage + 1)}
+            className="pagination-btn"
+            onClick={() => setCurrentPage(p => p + 1)}
             disabled={currentPage === totalPages}
           >
             Suivant
@@ -68,10 +60,9 @@ export default function ReservationList({ reservations, onDelete }) {
         </div>
       )}
 
-      {/* Info pagination */}
-      <div className="pagination-info">
-        Page {currentPage} sur {totalPages} | {reservations.length} réservation(s) au total
-      </div>
+      <p className="pagination-info">
+        Page {currentPage} sur {totalPages} &mdash; {reservations.length} réservation(s)
+      </p>
     </div>
   );
 }
