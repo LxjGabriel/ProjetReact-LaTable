@@ -52,58 +52,106 @@ Project-Node-React/
 
 ---
 
-## Installation et lancement
+## Lancer le projet
 
 ### Prérequis
 
-- [Docker](https://www.docker.com/) et Docker Compose installés
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installé et **démarré**
 
-### Avec Make
+> Docker Desktop inclut Docker Compose — aucune installation supplémentaire n'est nécessaire.
 
+---
+
+### Étape 1 — Cloner le dépôt
+
+```bash
+git clone https://github.com/LxjGabriel/ProjetReact-LaTable.git
+cd ProjetReact-LaTable
+```
+
+### Étape 2 — Lancer Docker Desktop
+
+Ouvre **Docker Desktop** et attends que l'icône dans la barre des tâches soit stable (plus de spinner).
+
+### Étape 3 — Construire et démarrer les services
+
+**Avec Make :**
 ```bash
 make build
 make start
 ```
 
-### Sans Make
-
+**Sans Make :**
 ```bash
 docker-compose build
 docker-compose up -d
 ```
 
-### Accès aux services (Docker)
+> La première fois, `build` peut prendre quelques minutes (téléchargement des images Node.js et PostgreSQL). Les fois suivantes, `make start` ou `docker-compose up -d` suffit.
+
+### Étape 4 — Ouvrir l'application
 
 | Service | URL |
 |---|---|
-| Frontend React | http://localhost:3001 |
-| API Backend | http://localhost:3000 |
+| **Application (frontend)** | http://localhost:3001 |
+| API backend | http://localhost:3000 |
+
+Ouvre **http://localhost:3001** dans ton navigateur. C'est prêt.
+
+---
+
+### Arrêter les services
+
+```bash
+make stop
+# ou
+docker-compose down
+```
+
+### Réinitialiser complètement (base de données incluse)
+
+```bash
+make clean
+# ou
+docker-compose down -v
+```
 
 ---
 
 ## Développement local (sans Docker)
 
-### Backend
+Si tu préfères lancer les services manuellement sans Docker :
 
+**Backend**
 ```bash
 cd backend
 npm install
 node server.js
+# API disponible sur http://localhost:3000
 ```
 
-API disponible sur : **http://localhost:3000**
-
-### Frontend
-
-Le `vite.config.js` est configuré sur le port 3000, ce qui entre en conflit avec le backend. Lancez Vite sur un port différent :
-
+**Frontend** — dans un second terminal
 ```bash
 cd frontend
 npm install
 npx vite --port 5173
+# Frontend disponible sur http://localhost:5173
 ```
 
-Frontend disponible sur : **http://localhost:5173**
+> Le `vite.config.js` est configuré sur le port 3000, ce qui entre en conflit avec le backend. Utilise `--port 5173` pour éviter ce conflit.
+
+---
+
+## Dépannage
+
+**Les conteneurs ne démarrent pas ?**
+Vérifie que Docker Desktop est bien lancé avant d'exécuter les commandes.
+
+**Le port 3000 ou 3001 est déjà utilisé ?**
+Un autre service tourne sur ce port. Arrête-le, ou modifie les ports dans `docker-compose.yml`.
+
+**Les données n'apparaissent pas ?**
+La base de données est initialisée automatiquement au premier lancement via `backend/init-db/init.sql`. Si elle semble vide, fais `make clean` puis `make build && make start` pour repartir de zéro.
 
 ---
 
