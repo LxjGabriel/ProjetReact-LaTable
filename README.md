@@ -1,145 +1,275 @@
-# Application réservation restaurant 
-# Installation
+# La Table — Application de réservation de restaurant
 
-Lancez Docker
+Application web full-stack de gestion de réservations pour un restaurant. Elle permet aux clients de consulter la carte, de réserver une table et de gérer leurs réservations, tandis que les administrateurs disposent d'outils de gestion complets.
 
-## Avec Make
+---
 
-Si vous avez Make, dans le terminal entrez seulement ces commandes :
+## Technologies utilisées
+
+### Frontend
+| Technologie | Version | Rôle |
+|---|---|---|
+| React | 19 | Framework UI |
+| React Router DOM | 7 | Routage côté client |
+| Axios | 1.9 | Appels HTTP vers l'API |
+| Vite | 6 | Bundler et serveur de développement |
+| CSS custom properties | — | Design system (sans framework CSS) |
+
+### Backend
+| Technologie | Version | Rôle |
+|---|---|---|
+| Node.js | — | Environnement d'exécution |
+| Express | 5 | Framework HTTP |
+| PostgreSQL | 14 | Base de données |
+| pg | 8 | Client PostgreSQL (requêtes SQL brutes, sans ORM) |
+| jsonwebtoken | 9 | Authentification JWT |
+| bcryptjs | 3 | Hachage des mots de passe |
+| dotenv | 16 | Variables d'environnement |
+
+---
+
+## Architecture générale
 
 ```
+Project-Node-React/
+├── backend/               # API Node.js / Express
+│   ├── controllers/       # Logique métier par ressource
+│   ├── routes/            # Définition des routes Express
+│   ├── middleware/        # Auth JWT + vérification de rôle
+│   ├── db/                # Configuration de la connexion PostgreSQL
+│   ├── init-db/           # Script SQL d'initialisation (init.sql)
+│   └── server.js          # Point d'entrée du serveur
+├── frontend/              # Application React
+│   └── src/
+│       ├── components/    # Composants réutilisables
+│       ├── views/         # Pages (auth, menu, reservation, profile)
+│       ├── services/      # Appels API et utilitaires
+│       └── styles/        # Fichiers CSS spécifiques
+├── docker-compose.yml     # Orchestration des services Docker
+├── Makefile               # Commandes simplifiées
+└── README.md
+```
+
+---
+
+## Installation et lancement
+
+### Prérequis
+
+- [Docker](https://www.docker.com/) et Docker Compose installés
+
+### Avec Make
+
+```bash
 make build
 make start
 ```
 
-## Sans Make
+### Sans Make
 
-Si vous n'avez pas Make, alors lancez ces commandes :
-
-```
+```bash
 docker-compose build
 docker-compose up -d
 ```
 
-L'API devrait se lancer [Ici](http://localhost:3000)
-L'Application React [Ici](http://localhost:3001)
+### Accès aux services
 
-# Connexion :
+| Service | URL |
+|---|---|
+| Frontend React | http://localhost:3001 |
+| API Backend | http://localhost:3000 |
 
-## Admin :
+---
 
-- admin@example.com
-- Password123!
+## Commandes Make disponibles
 
-## User :
+| Commande | Description |
+|---|---|
+| `make build` | Construit les images Docker |
+| `make start` | Démarre tous les services en arrière-plan |
+| `make stop` | Arrête tous les services |
+| `make restart` | Redémarre tous les services |
+| `make clean` | Arrête les services et supprime les volumes |
 
-- user@example.com
-- Password123!
+---
 
-# Repartition des tâches - Backend
+## Variables d'environnement
 
-- Auth / JWT : Cedric - Tom
-- Reservations : Nicolas - Tom
-- Tables : Jose
-- Menus : Tom
-- Docker : Nicolas
+Ces variables sont configurées dans `docker-compose.yml`. Pour un déploiement manuel, créez un fichier `.env` dans `backend/` :
 
-# API Documentation
+| Variable | Description | Valeur par défaut (Docker) |
+|---|---|---|
+| `DB_HOST` | Hôte de la base de données | `db` |
+| `DB_USER` | Utilisateur PostgreSQL | `postgres` |
+| `DB_PASSWORD` | Mot de passe PostgreSQL | `postgres` |
+| `DB_NAME` | Nom de la base de données | `resa_db` |
+| `DB_PORT` | Port PostgreSQL | `5432` |
+| `SECRET_KEY` | Clé secrète JWT | `1234567890123432` |
+| `PORT` | Port d'écoute du serveur | `3000` |
 
-Dans le rendu du devoir il y a l'export POSTMAN de la collection avec toute les routes de l'API
-pour certaines routes, il faut etre authentifié,
-l'enpoint login permet de se connecter, il renvera un token.
-Ce token sera a entré dans Auth de la requête (Bearer Token)
+> **Important :** Changez `SECRET_KEY` et les mots de passe PostgreSQL avant tout déploiement en production.
 
-# Repartition des tâches - Frontend
+---
 
-Pour chaque feature, tout les éléments ont été realisé par la personne (routes, appel API, styles composants etc..)
+## Comptes de démonstration
 
-|                                                                                 | Cédric | Tom | Nicolas |
-| ------------------------------------------------------------------------------- | ------ | --- | ------- |
-| Affichage des réservations                                                      |        |     | x       |
-| Annulation / confiramtions réservation coté admin                               |        |     | x       |
-| Pagination dans les réservations                                                |        |     | x       |
-| Récupérations des opening slots available                                       | x      |     |         |
-| Création des reservations en fonction des openings slots et nombre de personnes | x      |     |         |
-| Filtre des reservations coté admin                                              | x      |     |         |
-| Récupérations / création des menus                                              |        | x   |         |
-| Setup Router, Toasts                                                            |        | x   |         |
-| Setup de l'authentification                                                     |        | x   |         |
-| Page profile / change password / update profile                                  |        | x   |         |
+Créés automatiquement au premier lancement via `backend/init-db/init.sql`.
 
-# Routes Frontend
+| Rôle | Email | Mot de passe |
+|---|---|---|
+| Administrateur | admin@example.com | Password123! |
+| Utilisateur | user@example.com | Password123! |
 
-Voici la liste des routes principales de l'application React et leur description :
+---
 
-| Route               | Description                                              |
-| ------------------- | -------------------------------------------------------- |
-| `/`                 | Accueil de l'application                                 |
-| `/login`            | Page de connexion utilisateur                            |
-| `/signup`           | Page d'inscription utilisateur                           |
-| `/logout`           | Déconnexion et redirection vers la page de connexion     |
-| `/menu`             | Affichage de tous les menus                              |
-| `/menu/create`      | Création d'un nouveau menu (réservé aux administrateurs) |
-| `/menu/edit/:id`    | Édition d'un menu existant (réservé aux administrateurs) |
-| `/my-reservations`  | Affichage des réservations de l'utilisateur connecté     |
-| `/reservations`     | Gestion des réservations (réservé aux administrateurs)   |
-| `/reservations/new` | Création d'une nouvelle réservation                      |
-| `/profile`          | Affichage du profil utilisateur                          |
-| `/change-password`  | Modification du mot de passe                             |
-| `/update-profile`   | Modification des informations du profil                  |
+## Fonctionnalités principales
 
-- Les routes protégées nécessitent d'être connecté, certaines nécessitent également le rôle administrateur.
-- Si l'accès n'est pas autorisé, l'utilisateur est redirigé vers la page de connexion ou la page d'accueil selon le cas.
+### Côté utilisateur
+- Consultation de la carte par catégorie (Entrées, Plats, Desserts, Boissons)
+- Création d'une réservation en choisissant un créneau disponible et un nombre de personnes
+- Consultation et annulation de ses propres réservations
+- Gestion du profil (email, prénom, nom, téléphone)
+- Changement de mot de passe
 
-# Schéma des composants et de leur arborescence (Frontend)
+### Côté administrateur
+- Gestion de la carte : ajout, modification et suppression de produits
+- Consultation de toutes les réservations avec filtres (date, statut)
+- Confirmation ou refus des réservations en attente
+- Accès aux informations de contact des clients
+
+### Authentification
+- Inscription et connexion par email / mot de passe
+- Authentification JWT (token valable 1 heure, transmis en Bearer)
+- Deux rôles : `USER` (0) et `ADMIN` (1)
+- Routes protégées selon le rôle
+
+---
+
+## Routes du frontend
+
+| Route | Accès | Description |
+|---|---|---|
+| `/` | Public | Page d'accueil |
+| `/login` | Public | Connexion |
+| `/signup` | Public | Inscription |
+| `/logout` | Public | Déconnexion |
+| `/menu` | Public | Carte du restaurant |
+| `/menu/create` | Admin | Ajouter un produit à la carte |
+| `/menu/edit/:id` | Admin | Modifier un produit |
+| `/reservations` | Admin | Gestion de toutes les réservations |
+| `/reservations/new` | Utilisateur | Créer une nouvelle réservation |
+| `/my-reservations` | Utilisateur | Mes réservations |
+| `/profile` | Authentifié | Mon profil |
+| `/update-profile` | Authentifié | Modifier le profil |
+| `/change-password` | Authentifié | Changer le mot de passe |
+
+Les routes protégées redirigent vers `/login` si l'utilisateur n'est pas connecté, et vers `/` s'il ne dispose pas du rôle requis.
+
+---
+
+## Documentation de l'API
+
+**Base URL :** `http://localhost:3000`
+
+**Authentification :** Token JWT passé dans le header :
+```
+Authorization: Bearer <token>
+```
+
+### Authentification
+
+| Méthode | Route | Auth | Description |
+|---|---|---|---|
+| POST | `/login` | Non | Connexion — retourne un token JWT |
+| POST | `/signup` | Non | Inscription |
+| GET | `/me` | Oui | Profil de l'utilisateur connecté |
+| PUT | `/update-profile` | Oui | Modifier le profil |
+| POST | `/change-password` | Oui | Changer le mot de passe |
+| GET | `/user/:id` | Admin | Obtenir un utilisateur par son ID |
+
+### Menu
+
+| Méthode | Route | Auth | Description |
+|---|---|---|---|
+| GET | `/menu` | Non | Tous les produits |
+| GET | `/menu/category/:category` | Non | Produits par catégorie (0=Entrée, 1=Plat, 2=Dessert, 3=Boisson) |
+| GET | `/menu/:id` | Non | Un produit par son ID |
+| POST | `/menu` | Admin | Créer un produit |
+| PUT | `/menu/:id` | Admin | Modifier un produit |
+| DELETE | `/menu/:id` | Admin | Supprimer un produit |
+
+### Réservations
+
+| Méthode | Route | Auth | Description |
+|---|---|---|---|
+| GET | `/reservation/my` | Oui | Réservations de l'utilisateur connecté |
+| POST | `/reservation` | Oui | Créer une réservation |
+| DELETE | `/reservation/:id` | Oui | Annuler une réservation |
+| GET | `/reservation` | Admin | Toutes les réservations |
+| PUT | `/reservation/:id/confirm` | Admin | Confirmer une réservation |
+| PUT | `/reservation/:id` | Admin | Modifier une réservation |
+
+### Créneaux d'ouverture
+
+| Méthode | Route | Auth | Description |
+|---|---|---|---|
+| GET | `/opening_slot/available` | Non | Créneaux disponibles à la réservation |
+| GET | `/opening_slot` | Non | Tous les créneaux |
+| POST | `/opening_slot` | Admin | Créer un créneau |
+| PUT | `/opening_slot/:id` | Admin | Modifier un créneau |
+| DELETE | `/opening_slot/:id` | Admin | Supprimer un créneau |
+
+---
+
+## Schéma des composants (Frontend)
 
 ```
 App
-│
 ├── NavBarComponent
 ├── ToastContainer
 └── Routes
     ├── Home
     │   └── ReservationButton
     ├── Login
-    │   └── InputComponent
-    │   └── ButtonComponent
     ├── Signup
-    │   └── InputComponent
-    │   └── ButtonComponent
     ├── Logout
     ├── MenuHome
-    │   ├── MenuCardComponent (pour chaque catégorie)
-    │   │   └── MenuActionsPopover (si admin)
+    │   ├── MenuCardComponent (×4 catégories)
+    │   │   └── MenuActionsPopover (admin uniquement)
     │   └── ReservationButton
-    ├── MenuAdd
+    ├── MenuAdd (admin)
     │   ├── InputComponent
     │   ├── SelectComponent
     │   └── ButtonComponent
-    ├── MenuEdit
+    ├── MenuEdit (admin)
     │   ├── InputComponent
     │   ├── SelectComponent
     │   └── ButtonComponent
     ├── MyReservations
     │   ├── ReservationList
-    │   │   ├── ReservationCard (pour chaque réservation)
+    │   │   └── ReservationCard (×n)
     │   └── ReservationButton
-    ├── Reservations (admin)
-    │   ├── ReservationList
-    │   │   ├── ReservationCard (pour chaque réservation)
-    ├── Profile
-    │   └── ButtonComponent
-    ├── ChangePassword
+    ├── NewReservation
     │   ├── InputComponent
+    │   └── ButtonComponent
+    ├── Reservations (admin)
+    │   └── Table avec filtres (date, statut)
+    ├── Profile
     │   └── ButtonComponent
     ├── EditProfile
     │   ├── InputComponent
     │   └── ButtonComponent
-    └── NewReservation
+    └── ChangePassword
         ├── InputComponent
         └── ButtonComponent
 ```
 
-- **NavBarComponent** et **ToastContainer** sont présents sur toutes les pages.
-- Les composants de formulaire (`InputComponent`, `SelectComponent`, `ButtonComponent`) sont réutilisés dans plusieurs vues.
-- Les routes protégées utilisent le composant `ProtectedRoute` pour la gestion de l’authentification et des rôles.
+> `NavBarComponent` et `ToastContainer` sont présents sur toutes les pages.
+> Les routes protégées utilisent le composant `ProtectedRoute`.
+
+---
+
+## Auteurs
+
+- **José Gabriel Vasquez Duarte**
+- **Rania**
