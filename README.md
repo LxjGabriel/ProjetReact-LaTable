@@ -72,12 +72,38 @@ docker-compose build
 docker-compose up -d
 ```
 
-### Accès aux services
+### Accès aux services (Docker)
 
 | Service | URL |
 |---|---|
 | Frontend React | http://localhost:3001 |
 | API Backend | http://localhost:3000 |
+
+---
+
+## Développement local (sans Docker)
+
+### Backend
+
+```bash
+cd backend
+npm install
+node server.js
+```
+
+API disponible sur : **http://localhost:3000**
+
+### Frontend
+
+Le `vite.config.js` est configuré sur le port 3000, ce qui entre en conflit avec le backend. Lancez Vite sur un port différent :
+
+```bash
+cd frontend
+npm install
+npx vite --port 5173
+```
+
+Frontend disponible sur : **http://localhost:5173**
 
 ---
 
